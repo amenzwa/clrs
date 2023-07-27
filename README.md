@@ -2,7 +2,11 @@
 
 ## *Jupyter notebooks for CLRS algorithms*
 
-This project implements some of the interesting algorithms (mostly graphs) described in the textbook [*Introduction to Algorithms*](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) (4ed 2022) by Professors Cormen, Leiserson, Rivest, and Stein (CLRS 4ed). The Python programmes and the associated explanations are presented as [Jupyter](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) notebook interactive documents. The intended audience is the first year Computer Science students taking algorithms, especially those using CLRS, one of the most popular algorithms textbooks.
+This project implements some of the interesting algorithms (mostly graphs) described in the textbook [*Introduction to Algorithms*](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) (4ed 2022) by Professors Cormen, Leiserson, Rivest, and Stein (CLRS 4ed). The Python programmes and the associated explanations are presented as [Jupyter](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) notebook interactive documents.
+
+The primary audience of this project is the first year Computer Science students taking algorithms, especially those using CLRS, one of the most popular algorithms textbooks. The main purpose here is to walk the student through CLRS, which can be quite theoretical at places, and show how to convert the mathematics and English descriptions into programmes. The secondary audience is the IT practitioners interested in algorithm design and implementation.
+
+## *installation*
 
 You will need a copy of CLRS 4ed and you will want to be able to interact with the `.ipynb` IPython notebooks. If you merely wish to read the pre-rendered documents, just click on the `.ipynb` notebooks in this project [repository](https://github.com/amenzwa/clrs). GitHub will render the notebooks as static web pages.
 
