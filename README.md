@@ -4,7 +4,11 @@
 
 This project implements some of the interesting algorithms (mostly graphs) described in the textbook [*Introduction to Algorithms*](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) (4ed 2022) by Professors Cormen, Leiserson, Rivest, and Stein (CLRS 4ed). The Python programmes and the associated explanations are presented as [Jupyter](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) notebook interactive documents.
 
-The primary audience of this project is the first year Computer Science students taking algorithms, especially those using CLRS, one of the most popular algorithms textbooks. The main purpose here is to walk the student through CLRS, which can be quite theoretical at places, and show how to convert the mathematics and English descriptions into programmes. The secondary audience is the IT practitioners interested in algorithm design and implementation.
+This is an ongoing project. It begins with the graph representation, the elementary graph algorithms, and two applications presented in Chapter 20 of CLRS. More implementations and commentaries will be added in due course.
+
+The main purpose of this project is to be the practical companion to CLRS, which can be quite theoretical at places. It shows how to convert the English descriptions of algorithms given in the textbook into *code* and how to use the proven mathematical properties to implement *test* cases for the code. Jupyter is chosen for its excellent literate programming environment that produces documents with mathematical equations and runnable programmes. Python is chosen because it is one of the most comprehensible programming languages. It is fairly succinct, has a reasonably small syntactic constructs, and possesses relatively few quirks.
+
+The primary audience of this project is the first year Computer Science students taking algorithms, especially those using CLRS, one of the most popular algorithms textbooks. The secondary audience is the IT practitioners interested in algorithm design and implementation.
 
 ## *installation*
 
