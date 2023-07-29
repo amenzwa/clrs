@@ -6,6 +6,7 @@ Author: Amen Zwa, Esq.
 Copyright sOnit, Inc. 2023
 """
 
+from functools import reduce
 from queue import Queue
 from typing import Callable, Dict, List, Union
 
@@ -111,6 +112,14 @@ class VE(Tagged):
     return len(self.getVV())
   def adj(self, u: Vertex) -> List[Vertex]:
     return [self.getV(e.v.tag) for e in self.getEE() if e.u.tag == u.tag]
+  def isAncestor(self, u: Vertex, v: Vertex) -> bool:
+    # check if vertex u is the ancestor of vertex v (there exists a path from u ~> v)
+    def reachable(a: Vertex) -> bool:
+      # check if a can reach v
+      aa = self.adj(a)  # edge a -> v
+      return True if v in aa else reduce(lambda acc, b: acc or reachable(b), aa, False)  # path a ~> v
+    return True if u == v else reachable(u)  # self-loop or path
+  def isDescendant(self, v: Vertex, u: Vertex) -> bool: return self.isAncestor(u, v)
 
   # edge
 
@@ -287,7 +296,7 @@ def contract(g: Graph, f: Graph) -> Graph:
 
 ## utilities
 
-def draw(g: Graph, directed: bool, label: str = "", engine: str = "sfdp") -> V.Graph:
+def draw(g: Union[Graph, Tree], directed: bool, label: str = "", engine: str = "sfdp") -> V.Graph:
   # returned gv must be evaluated in the top level scope for it to render in the notebook
   gv = V.Digraph(engine=engine) if directed else V.Graph(engine=engine)
   gv.attr(label=label if label != "" else g.tag)

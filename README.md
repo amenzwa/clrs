@@ -10,7 +10,7 @@ The main purpose of this project is to be the practical companion to CLRS, which
 
 The primary audience of this project is the first year Computer Science students taking algorithms, especially those using CLRS, one of the most popular algorithms textbooks. The secondary audience is the IT practitioners interested in algorithm design and implementation.
 
-# DEPENDENCIES
+# CONTENTS
 
 - [`util.ipynb`](./util.ipynb)—utility types and functions
   - [`graph.ipynb`](./graph.ipynb)—graph representation, BFS, and DFS from Chapter 20
@@ -53,6 +53,14 @@ An IPython notebook is similar to a Python module. But a notebook differs from a
 - An IPython notebook, by nature, contains both the Markdown text and the Python code.
 - When you run JLD, it starts up a new session. If you open an existing notebook in this new session, the cells in the notebook are in their unevaluated states. If you now evaluate some cell lower in the notebook and this cell depends on some earlier cells, you will get "undefined" errors. So, it is advisable to perform **Run → Run All Cells** immediately after opening an existing notebook.
 - Sometimes, a notebook cannot see updates made in other notebooks. It may then be necessary to perform **File → Reload Notebook from Disk**. If that did not resolve the issue, perform **Run → Restart Kernel and Run All Cells...**. And if nothing worked, quit JLD and start over again.
+
+# PHILOSOPHY
+
+The implementations in this project are neither purely functional nor pure procedural; they are purely practical. They employ a mixture of procedural, objective, and functional techniques, whichever is easier to understand for the concept under consideration.
+
+Over the decades, the CS community has been obsessed stodgily with purity: purely imperative, purely objective, purely functional, purely logical. On the other hand, the IT community has, philosophically and procedurally, continuously swung between the extremes, from blasé to pedantry, whichever is the flavour of the day.
+
+What is now patently clear is that in software design and development, practicality trumps purity *and* pragmatic is superior to phlegmatic or pedantic. Note that these two clauses are joined with a conjunction.
 
 # CAUTION
 

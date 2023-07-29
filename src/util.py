@@ -30,6 +30,17 @@ def isResult(r: Result[α]) -> bool: return not isError(r)
 
 Infinity = sys.maxsize
 
+class Interval:
+  def __init__(self, lo: int, hi: int):
+    self.i = (lo, hi)
+
+  def contains(self, v: int) -> bool: return v in self.i
+  def isInside(self, j: "Interval") -> bool:
+    (ilo, ihi) = self.i
+    (jlo, jhi) = j.i
+    return ilo >= jlo and ihi <= jhi
+  def isDisjoint(self, j: "Interval") -> bool: return not self.isInside(j) and not j.isInside(self)
+
 ### Chapter 19 Data Structures for Disjoint Sets p.520
 
 class SSet:  # sorted set
