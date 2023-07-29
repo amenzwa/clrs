@@ -24,9 +24,9 @@ The primary audience of this project is the first year Computer Science students
 
 You will need a copy of CLRS 4ed and you will want to be able to interact with the `.ipynb` IPython notebooks. If you merely wish to read the pre-rendered documents, just click on the `.ipynb` notebooks in this project [repository](https://github.com/amenzwa/clrs). GitHub will render the notebooks as static web pages.
 
-The simplest way to use the notebooks is use [MyBinder.org](https://mybinder.org/v2/gh/amenzwa/clrs/HEAD); all you need do is to type in the link `https://mybinder.org/v2/gh/amenzwa/clrs/HEAD` in your browser and meditate, while the Binder cloud contemplates whether or not to run the notebooks.
+The simplest way to use the notebooks is use [MyBinder.org](https://mybinder.org/v2/gh/amenzwa/clrs/HEAD); all you need do is to type in the link `https://mybinder.org/v2/gh/amenzwa/clrs/HEAD` in your browser and meditate, while the Binder cloud contemplates whether or not to run the notebooks. And if you are a software developer, you should use VSCode to write IPython notebooks.
 
-But a far more productive way is to use [JupyterLab Desktop](https://github.com/jupyterlab/jupyterlab-desktop) (JLD) locally on your computer. Install JLD as per the instructions given in that project's documentation. After installation, run JLD. In the welcome window, as shown in the screenshot below, click on the hamburger menu and select the **Settings** menu item. In the *Settings* dialogue, click on the **Server** tab on the left panel. In the *Server* panel, select the **Bundled Python environment** radio button and press the **Apply & restart** button. This will create a Python virtual environment folder during installation. As of mid 2023 when this project was created, JLD version 4.0.2 comes bundled with Python 3.8.17, whereas Python 3.11.4 is the stable release. On macOS, the bundled virtual environment folder is `~/Library/jupyterlab-desktop/jlab_server/`. Now, quit JLD.
+But for most users, running [JupyterLab Desktop](https://github.com/jupyterlab/jupyterlab-desktop) (JLD) locally is the most sensible option. Install JLD as per the instructions given in that project's documentation. After installation, run JLD. In the welcome window, as shown in the screenshot below, click on the hamburger menu and select the **Settings** menu item. In the *Settings* dialogue, click on the **Server** tab on the left panel. In the *Server* panel, select the **Bundled Python environment** radio button and press the **Apply & restart** button. This will create a Python virtual environment folder during installation. As of mid 2023 when this project was created, JLD version 4.0.2 comes bundled with Python 3.8.17, whereas Python 3.11.4 is the stable release. On macOS, the bundled virtual environment folder is `~/Library/jupyterlab-desktop/jlab_server/`. Now, quit JLD.
 
 ![JupyterLab Desktop Settings dialogue](./images/JLDSettings.jpg)
 
@@ -40,6 +40,7 @@ $ git clone https://github.com/amenzwa/clrs.git
 Then, we install the required Python packages into JLD's virtual environment using as follows:
 
 ```bash
+$ brew install graphviz # required by Python graphviz library
 $ cd ~/Library/jupyterlab-desktop
 $ source ./jlab_server/activate
 (jlab_server) $ pip3 install -r ~/Documents/clrs/requirements.txt
