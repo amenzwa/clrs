@@ -38,12 +38,12 @@ class BFSTestCase(TestCase):
   def testBFS(self) -> None:
     self.g = bfs(self.g, self.g.getV("s"))
     print(self.g)
-    draw(self.g, directed=False, label=f"{self.g.tag} with vertex discovery times")
+    draw(self.g, directed=False, label=f"{self.g.tag} with vertex discovery times").render(f"vis-{self.g.tag}")
     s = self.g.getV("s")
     t = bft(self.g, s)
     assert (t.numEE() == t.numVV() - 1)  # Theorem B.2 p.1169
     print(t)
-    draw(t, directed=False, label=f"{t.tag} with vertex discovery times")
+    draw(t, directed=False, label=f"{t.tag} with vertex discovery times").render(f"vis-{t.tag}")
 
 ## DFS
 
@@ -68,9 +68,9 @@ class DFSTestCase(TestCase):
 
   def testDFS(self) -> None:
     f = dff(self.g)
-    draw(self.g, directed=True, label=f"{self.g.tag} with vertex discovery and finish times")
+    draw(self.g, directed=True, label=f"{self.g.tag} with vertex discovery and finish times").render(f"vis-{self.g.tag}")
     print(f)
-    draw(f, directed=True, label=f"{f.tag} with vertex discovery and finish times")
+    draw(f, directed=True, label=f"{f.tag} with vertex discovery and finish times").render(f"vis-{f.tag}")
 
 ## TSort
 
@@ -99,7 +99,7 @@ class TSortTestCase(TestCase):
   def testTSort(self) -> None:
     s = tsort(self.g)
     for u in s: print(u)
-    draw(self.g, directed=True, label=f"{self.g.tag} vertices descending sorted by finish times", engine="circo")
+    draw(self.g, directed=True, label=f"{self.g.tag} vertices descending sorted by finish times", engine="circo").render(f"vis-{self.g.tag}")
 
 ## SCC
 
@@ -127,4 +127,4 @@ class SCCTestCase(TestCase):
   def testTSort(self) -> None:
     c = scc(self.g)
     print(c)
-    draw(c, directed=True, label=f"{c.tag} strongly connected components")
+    draw(c, directed=True, label=f"{c.tag} strongly connected components").render(f"vis-{c.tag}")

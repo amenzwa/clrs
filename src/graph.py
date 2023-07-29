@@ -287,14 +287,15 @@ def contract(g: Graph, f: Graph) -> Graph:
 
 ## utilities
 
-def draw(gt: Union[Graph, Tree], directed: bool, label: str = "", engine: str = "sfdp") -> V.Graph:
+def draw(g: Graph, directed: bool, label: str = "", engine: str = "sfdp") -> V.Graph:
   # returned gv must be evaluated in the top level scope for it to render in the notebook
   gv = V.Digraph(engine=engine) if directed else V.Graph(engine=engine)
-  gv.attr(label=label if label != "" else gt.tag)
-  for v in gt.getVV(): gv.node(v.tag, label=v.show(), shape=f"{'rectangle' if v.isRoot() else 'ellipse'}")
+  gv.attr(label=label if label != "" else g.tag)
+  for v in g.getVV(): gv.node(v.tag, label=v.show(), shape=f"{'rectangle' if v.isRoot() else 'ellipse'}")
   ed = {}  # already drawn edges
-  for e in gt.getEE():
-    if not directed and makeEtag(e.v, e.u) not in ed.keys():  # for undirected graph, avoid drawing (v, u) if (u, v) has already been drawn
+  for e in g.getEE():
+    vutag = makeEtag(e.v, e.u)
+    if directed or vutag not in ed.keys():  # for undirected graph, avoid drawing (u, v) if (v, u) has already been drawn
       gv.edge(e.u.tag, e.v.tag, label=e.show())
       ed[e.tag] = e
   return gv
