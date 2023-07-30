@@ -8,7 +8,7 @@ This is an ongoing project. It begins with the graph representation, the element
 
 The main purpose of this project is to be the practical companion to CLRS, which can be quite theoretical at places. It shows how to convert the English descriptions of algorithms given in the textbook into *code* and how to use the proven mathematical properties to implement *test* cases for the code. Jupyter is chosen for its excellent literate programming environment that produces documents with mathematical equations and runnable programmes. Python is chosen because it is one of the most comprehensible programming languages. It is fairly succinct, has a reasonably small syntactic constructs, and possesses relatively few quirks.
 
-The primary audience of this project is the first year Computer Science students taking algorithms, especially those using CLRS, one of the most popular algorithms textbooks. The secondary audience is the IT practitioners interested in algorithm design and implementation.
+The primary audience of this project is the undergraduate Computer Science students taking algorithms, especially those using CLRS, which is one of the most popular algorithms textbooks. The secondary audience is the IT practitioners interested in algorithm design, analysis, and implementation.
 
 # CONTENTS
 
