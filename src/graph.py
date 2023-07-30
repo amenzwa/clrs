@@ -119,7 +119,8 @@ class VE(Tagged):
       aa = self.adj(a)  # edge a -> v
       return True if v in aa else reduce(lambda acc, b: acc or reachable(b), aa, False)  # path a ~> v
     return True if u == v else reachable(u)  # self-loop or path
-  def isDescendant(self, v: Vertex, u: Vertex) -> bool: return self.isAncestor(u, v)
+  def isDescendant(self, v: Vertex, u: Vertex) -> bool:
+    return self.isAncestor(u, v)
 
   # edge
 
@@ -160,7 +161,10 @@ def bfs(g: Graph, s: Vertex) -> Graph:
     return explore()
 
   # initialize
-  g.init()
+  for u in g.getVV():
+    u.par = None
+    u.dis = Infinity
+    u.col = VColor.White
   # s discovered
   s.par = None
   s.dis = 0
@@ -205,9 +209,11 @@ def dfs(g: Graph) -> Graph:
     u.col = VColor.Black
 
   # initialize
-  g.init()
+  for u in g.getVV():
+    u.par = None
+    u.col = VColor.White
   # search g
-  time = [0]
+  time = [0]  # use array instead of a scalar to allow explore() to mutate time
   for u in g.getVV():
     if u.col == VColor.White: explore(u)
   return g
@@ -220,7 +226,6 @@ def dff(g: Graph) -> Graph:
     if not v.isRoot():
       e = g.getE(makeEtag(v.par, v))
       f.insE(e)
-  # g = classify(f, g)
   return f
 
 ## §20.4 Topological sort p.573
@@ -269,9 +274,7 @@ def contract(g: Graph, f: Graph) -> Graph:
   # contract DFS g using DFF f
   def scv(u: Vertex) -> List[Vertex]:
     aa = f.adj(u)  # vertex u's adjacent vertices in DFF f
-    if aa == []: return []  # u is a leaf
-    v = aa[0]  # there is only one adjacent vertex v in DFF f
-    return [v, *scv(v)]
+    return [] if not aa else [v := aa[0], *scv(v)]
 
   c = Graph(f"{g.tag}₵")  # SCC c
   # create vertices of SCC c

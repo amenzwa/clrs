@@ -15,9 +15,11 @@ The primary audience of this project is the first year Computer Science students
 - [`util.ipynb`](./util.ipynb)—utility types and functions
   - [`graph.ipynb`](./graph.ipynb)—graph representation, BFS, and DFS from Chapter 20
     - [`graphtest.ipynb`](./graphtest.ipynb)—tests of BFS and DFS algorithms with visualisations
+    - [`mst.ipynb`](./mst.ipynb)—Kruskal's and Prim's MST algorithms from Chapter 21
+      - [`msttest.ipynb`](./msttest.ipynb)—tests of MST algorithms with visualisations
 
-  - [`mst.ipynb`](./mst.ipynb)—Kruskal's and Prim's MST algorithms from Chapter 21
-    - [`msttest.ipynb`](./msttest.ipynb)—tests of MST algorithms with visualisations
+
+The `graph.ipynb` notebook is where to start reading about graph algorithms.
 
 
 # INSTALLATION
