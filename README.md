@@ -2,15 +2,21 @@
 
 ## *Jupyter notebooks for CLRS algorithms*
 
-This project implements some of the interesting algorithms (mostly graphs) described in the textbook [*Introduction to Algorithms*](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) (4ed 2022) by Professors Cormen, Leiserson, Rivest, and Stein (CLRS 4ed). The Python programmes and the associated explanations are presented as [Jupyter](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) notebook interactive documents.
+This project provides implementations of, and commentaries on, some of the interesting algorithms described in the well known textbook [*Introduction to Algorithms*](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) by Professors Cormen, Leiserson, Rivest, and Stein (CLRS 4ed 2022; formerly CLR 1ed 1990). The Python implementations and the associated commentaries are presented as [Jupyter](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) notebook interactive documents.
 
-This is an ongoing project. It begins with the graph representation, the elementary graph algorithms, and two applications presented in Chapter 20 of CLRS. More implementations and commentaries will be added in due course.
+The main purpose here is to show how to convert the English descriptions of algorithms given in CLRS into *code* and how to use the theorems, lemmas, and other mathematical properties proven therein to implement *test* cases for the code. That is, the aim is not to provide a comprehensive implementations of CLRS algorithms, but to focus on the process of closely reading a mathematical textbook like this, following its arguments and proofs, converting algorithm text into code, and testing the implementations against proven mathematical properties.
 
-The main purpose of this project is to be the practical companion to CLRS, which can be quite theoretical at places. It shows how to convert the English descriptions of algorithms given in the textbook into *code* and how to use the proven mathematical properties to implement *test* cases for the code. Jupyter is chosen for its excellent literate programming environment that produces documents with mathematical equations and runnable programmes. Python is chosen because it is one of the most comprehensible programming languages. It is fairly succinct, has a reasonably small syntactic constructs, and possesses relatively few quirks.
+Jupyter is chosen for its excellent [literate programming](https://en.wikipedia.org/wiki/Literate_programming) environment that produces documents containing both mathematical text and runnable code. Python is chosen because it is one of the most comprehensible programming languages. It is fairly succinct, has a reasonably small syntactic constructs, and possesses relatively few quirks. But more importantly, it is an imperative language. Most textbooks, including CLRS, present decidedly imperative algorithms.
 
-The primary audience of this project is the undergraduate Computer Science students taking algorithms, especially those using CLRS, which is one of the most popular algorithms textbooks. The secondary audience is the IT practitioners interested in algorithm design, analysis, and implementation.
+Just because an algorithm is recursive does not make it functional. The imperativeness shines through, whenever it mutates its the data structures it accepts as input arguments. To my knowledge, there is but one textbook written from the functional perspective: [*Purely Functional Data Structures*](https://www.amazon.com/Purely-Functional-Data-Structures-Okasaki/dp/0521663504/ref=sr_1_1?keywords=purely+functional+data+structures&qid=1690905795&sprefix=purely+functional+%2Caps%2C81&sr=8-1), Okasaki 1999. I heartily recommend this textbook to anyone interested in [functional programming](https://en.wikipedia.org/wiki/Functional_programming)—in the academic sense of the phrase, not necessarily as it is practised in the IT industry.
+
+The primary audience of this project is the undergraduate Computer Science students taking algorithms, especially those using CLRS. The secondary audience is the IT practitioners interested in algorithm design, analysis, and implementation.
+
+This is an ongoing project. The first "commit" consists of graph representation, elementary graph algorithms, and two applications presented in Chapter 20 of CLRS. More implementations and commentaries will be added, incrementally.
 
 # CONTENTS
+
+## *IPython*
 
 - [`util.ipynb`](./util.ipynb)—utility types and functions
   - [`graph.ipynb`](./graph.ipynb)—graph representation, BFS, and DFS from Chapter 20
@@ -18,17 +24,26 @@ The primary audience of this project is the undergraduate Computer Science stude
     - [`mst.ipynb`](./mst.ipynb)—Kruskal's and Prim's MST algorithms from Chapter 21
       - [`msttest.ipynb`](./msttest.ipynb)—tests of MST algorithms with visualisations
 
-
 The `graph.ipynb` notebook is where to start reading about graph algorithms.
+
+## *Python*
+
+- `src/util.py`—utility types and functions
+  - `src/graph.py`—graph representation, BFS, and DFS from Chapter 20
+    - `src/graphtest.py`—tests of BFS and DFS algorithms with visualisations (`vis-*` output files)
+    - `src/mst.py`—Kruskal's and Prim's MST algorithms from Chapter 21
+      - `src/msttest.py`—tests of MST algorithms with visualisations
 
 
 # INSTALLATION
 
-You will need a copy of CLRS 4ed and you will want to be able to interact with the `.ipynb` IPython notebooks. If you merely wish to read the pre-rendered documents, just click on the `.ipynb` notebooks in this project [repository](https://github.com/amenzwa/clrs). GitHub will render the notebooks as static web pages.
+First, you must have a copy of CLRS 4ed and you will want to be able to interact with the `.ipynb` IPython notebooks. If you merely wish to read the pre-rendered documents, just click on the `.ipynb` notebooks in this project [repository](https://github.com/amenzwa/clrs). GitHub will render the notebooks as static web pages.
 
-The simplest way to use the notebooks is use [MyBinder.org](https://mybinder.org/v2/gh/amenzwa/clrs/HEAD); all you need do is to type in the link `https://mybinder.org/v2/gh/amenzwa/clrs/HEAD` in your browser and meditate, while the Binder cloud contemplates whether or not to run the notebooks. And if you are a software developer, you should use VSCode to write IPython notebooks.
+The simplest way to use the notebooks is use [MyBinder.org](https://mybinder.org/). All you need do is to type in the link `https://github.com/amenzwa/clrs` in the **GitHub repository name or URL** field on the Binder welcome page, as shown in the screenshot below. Go brew a cuppa, while the Binder cloud contemplates whether or not to run the notebooks.
 
-But for most users, running [JupyterLab Desktop](https://github.com/jupyterlab/jupyterlab-desktop) (JLD) locally is the most sensible option. Install JLD as per the instructions given in that project's documentation. After installation, run JLD. In the welcome window, as shown in the screenshot below, click on the hamburger menu and select the **Settings** menu item. In the *Settings* dialogue, click on the **Server** tab on the left panel. In the *Server* panel, select the **Bundled Python environment** radio button and press the **Apply & restart** button. This will create a Python virtual environment folder during installation. As of mid 2023 when this project was created, JLD version 4.0.2 comes bundled with Python 3.8.17, whereas Python 3.11.4 is the stable release. On macOS, the bundled virtual environment folder is `~/Library/jupyterlab-desktop/jlab_server/`. Now, quit JLD.
+![MyBinder.org](./images/BinderURL.png)
+
+And those of a programming persuasion should use [VSCode](https://code.visualstudio.com/) to interact with IPython notebooks. For most users, however, running [JupyterLab Desktop](https://github.com/jupyterlab/jupyterlab-desktop) (JLD) locally is the most sensible option. Install JLD as per the instructions given in that project's documentation. After installation, run JLD. In the welcome window, as shown in the screenshot below, click on the hamburger menu and select the **Settings** menu item. In the *Settings* dialogue, click on the **Server** tab on the left panel. In the *Server* panel, select the **Bundled Python environment** radio button and press the **Apply & restart** button. This will create a Python virtual environment folder during installation. As of mid 2023 when this project was created, JLD version 4.0.2 comes bundled with Python 3.8.17, whereas Python 3.11.4 is the stable release. On macOS, the bundled virtual environment folder is `~/Library/jupyterlab-desktop/jlab_server/`. Now, quit JLD.
 
 ![JupyterLab Desktop Settings dialogue](./images/JLDSettings.jpg)
 
@@ -42,7 +57,7 @@ $ git clone https://github.com/amenzwa/clrs.git
 Then, we install the required Python packages into JLD's virtual environment using as follows:
 
 ```bash
-$ brew install graphviz # required by Python graphviz library
+$ brew install graphviz # required by Python graphviz graph visualisation library
 $ cd ~/Library/jupyterlab-desktop
 $ source ./jlab_server/activate
 (jlab_server) $ pip3 install -r ~/Documents/clrs/requirements.txt
@@ -60,13 +75,21 @@ An IPython notebook is similar to a Python module. But a notebook differs from a
 
 The implementations in this project are neither purely functional nor pure procedural; they are purely practical. They employ a mixture of procedural, objective, and functional techniques, whichever is easier to understand for the concept under consideration.
 
-Over the decades, the CS community has been obsessed stodgily with purity: purely imperative, purely objective, purely functional, purely logical. On the other hand, the IT community has, philosophically and procedurally, continuously swung between the extremes, from blasé to pedantry, whichever is the flavour of the day.
+Over the decades, the CS community has bee-n obsessed stodgily with purity: purely imperative, purely objective, purely functional, purely logical. On the other hand, the IT community has, philosophically and procedurally, continuously swung between the extremes, from blasé to pedantry, whichever is the flavour of the day.
 
 What is now patently clear is that in software design and development, practicality trumps purity *and* pragmatic is superior to phlegmatic or pedantic. Note that these two clauses are joined with a conjunction.
 
+# STUDY
+
+When you study CLRS, and indeed any mathematical inclined textbook, read it in at least three passes: scan, dive, and climb.
+
+First, *scan* the chapter. Pick up some key terms and concepts. Take in the figures. Do not worry about understanding every concept you encounter; just collect the phrases. Next, reread the chapter, but this time, *dive* deeply. Fill out those terms and concepts you picked up in your initial scan. Do not stop until you have grasped all the concepts presented in the chapter. Typically, the concepts presented in a chapter rely on those presented in the earlier chapters and, sometimes, reference those yet to be presented. If you have not read the earlier chapters, at least read deeply the cited section, and follow it up the citation chain, thoroughly. Once you have thoroughly studied the concepts and the dependant ones, take a break, and review the material at a very high level. This *climb* is similar to scan, but this time, you are skimming the cloud tops with a full knowledge of the material; you are no longer wandering and probing in the dark.
+
+Once you have studied CLRS in this manner, you are read to plough through these notebooks.
+
 # CAUTION
 
-Jupyter, Mathematica, and similar [literate programming](https://en.wikipedia.org/wiki/Literate_programming) environments are excellent for small, mathematical or technical projects that needs to combine textual description with sample code or data visualisation. Class projects, technical publications, internal-use scripts, and similar small projects are all candidates for Jupyter-based literate programming endeavour. Like all "documents", it is the author's responsibility to keep the entire document, not just the text or the code, up-to-date.
+Jupyter, Mathematica, and similar literate programming environments are excellent for small, mathematical or technical projects that needs to combine textual description with sample code or data visualisation. Class projects, technical publications, internal-use scripts, and similar small projects are all candidates for Jupyter-based literate programming endeavour. Like all "documents", it is the author's responsibility to keep the entire document, not just the text or the code, up-to-date.
 
 However, if the project is large, like a typical enterprise application, using Jupyter will lead only to surprise and sadness. This is because Jupyter, while an excellent platform for its intended purpose—composing live, technical documents—is not at all appropriate for developing substantive applications with intricate dependencies.
 
