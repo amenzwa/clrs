@@ -112,6 +112,10 @@ class VE(Tagged):
     return len(self.getVV())
   def adj(self, u: Vertex) -> List[Vertex]:
     return [self.getV(e.v.tag) for e in self.getEE() if e.u.tag == u.tag]
+  def path(self, s: Vertex, v: Vertex) -> List[Vertex]:
+    # see p.562
+    if v.isRoot(): return []
+    return [s] if v == s else [v, *self.path(s, v.par)]
   def isAncestor(self, u: Vertex, v: Vertex) -> bool:
     # check if vertex u is the ancestor of vertex v (there exists a path from u ~> v)
     def reachable(a: Vertex) -> bool:

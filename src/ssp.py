@@ -6,6 +6,7 @@ Author: Amen Zwa, Esq.
 Copyright sOnit, Inc. 2023
 """
 
+from functools import reduce
 from queue import PriorityQueue
 from typing import List, Union
 
@@ -35,6 +36,10 @@ def relax(e: WgtEdge) -> bool:
     v.dis = d
     return True
   return False
+
+def shortestPathWeight(g: SSPGraph, s: Vertex, v: Vertex) -> float:
+  # see p.604
+  return [g.getE(makeEtag(u.par, u)).wgt for u in path(s, v)]
 
 ## §22.1 Bellman-Ford algorithm p.612
 
@@ -82,6 +87,7 @@ def sspBellmanFordDAWG(g: SSPGraph, s: Vertex) -> Option[Tree]:
 DijkstraSSPGraph = PrimMSTGraph  # uses PriVertex
 
 def sspDijkstra(g: SSPGraph, s: PriVertex) -> Tree:
+  assert(reduce(lambda acc, e: acc and e.wgt >= 0, g.getEE(), True))
   # initialize
   init(g, s)
   s.pri = s.dis
