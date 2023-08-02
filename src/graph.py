@@ -89,11 +89,11 @@ class VE(Tagged):
         self.ee[e.tag] = e
 
   def __str__(self) -> str:
-    return self.tag + "\n" + self.vertices() + "\n" + self.edges()
-  def vertices(self) -> str:
+    return self.tag + "\n" + self.showVertices() + "\n" + self.showEdges()
+  def showVertices(self) -> str:
     def neighbors(u: Vertex) -> str: return ",".join([v.tag for v in self.adj(u)])
     return "\n".join([f"  {u}\n    [{neighbors(u)}]" for u in self.getVV()])
-  def edges(self) -> str:
+  def showEdges(self) -> str:
     return "\n".join([f"  {e}" for e in self.getEE()])
 
   # vertex
