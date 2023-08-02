@@ -9,7 +9,7 @@ Copyright sOnit, Inc. 2023
 from queue import PriorityQueue
 from typing import Dict, List
 
-from src.graph import ESet, Edge, Graph, Tree, Vertex, makeEtag
+from src.graph import ESet, Edge, Graph, Tree, Vertex, makeETag
 from src.util import DSet, Infinity, Tag
 
 ## weighted edge
@@ -37,7 +37,7 @@ class MSTGraph(Graph):
       for vtag in vtags:
         u = self.getV(utag)
         v = self.getV(vtag)
-        e = WgtEdge(u, v, ew[makeEtag(u, v)])
+        e = WgtEdge(u, v, ew[makeETag(u, v)])
         self.ee[e.tag] = e
 
 ## Kruskal's MST algorithm p.592
@@ -96,7 +96,7 @@ def mstPrim(g: MSTGraph, r: PriVertex) -> Tree:
     u = q.get()
     for v in g.adj(u):
       # noinspection PyTypeChecker
-      e: WgtEdge = g.getE(makeEtag(u, v))  # disable type inspection, because e here is certain to be WgtEdge, not Edge
+      e: WgtEdge = g.getE(makeETag(u, v))  # disable type inspection, because e here is certain to be WgtEdge, not Edge
       if v in q.queue and e.wgt < v.pri:
         v.par = u
         v.pri = e.wgt
@@ -105,5 +105,5 @@ def mstPrim(g: MSTGraph, r: PriVertex) -> Tree:
   t = Tree(f"{g.tag}†")
   for v in g.getVV():
     t.insV(v)
-    if not v.isRoot(): t.insE(g.getE(makeEtag(v, v.par)))  # see p.596
+    if not v.isRoot(): t.insE(g.getE(makeETag(v, v.par)))  # see p.596
   return t

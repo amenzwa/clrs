@@ -10,7 +10,7 @@ from functools import reduce
 from queue import PriorityQueue
 from typing import List, Union
 
-from src.graph import Tree, Vertex, makeEtag, tsort
+from src.graph import Tree, Vertex, makeETag, tsort
 from src.mst import MSTGraph, PrimMSTGraph, PriVertex, WgtEdge
 
 from src.util import Infinity, Option
@@ -39,7 +39,7 @@ def relax(e: WgtEdge) -> bool:
 
 def shortestPathWeight(g: SSPGraph, s: Vertex, v: Vertex) -> float:
   # see p.604
-  return [g.getE(makeEtag(u.par, u)).wgt for u in path(s, v)]
+  return [g.getE(makeETag(u.par, u)).wgt for u in path(s, v)]
 
 ## §22.1 Bellman-Ford algorithm p.612
 
@@ -65,7 +65,7 @@ def getSSP(g: SSPGraph, s: Union[Vertex, PriVertex]) -> Tree:
     if u != s:
       p.insV(u)
     if not u.isRoot():
-      etag = makeEtag(u.par, u)
+      etag = makeETag(u.par, u)
       if g.hasE(etag):
         e = g.getE(etag)
         p.insE(e)
@@ -79,7 +79,7 @@ def sspBellmanFordDAWG(g: SSPGraph, s: Vertex) -> Option[Tree]:
   init(g, s)
   # relax edges
   for u in vv:  # for each topologically sorted vertex
-    for v in g.adj(u): relax(g.getE(makeEtag(u, v)))
+    for v in g.adj(u): relax(g.getE(makeETag(u, v)))
   return getSSP(g, s)
 
 ## §22.3 Dijkstra's algorithm p.620
@@ -99,7 +99,7 @@ def sspDijkstra(g: SSPGraph, s: PriVertex) -> Tree:
     u: PriVertex = q.get()
     b[u.tag] = u
     for v in g.adj(u):
-      if relax(g.getE(makeEtag(u, v))):
+      if relax(g.getE(makeETag(u, v))):
         v.pri = v.dis
         q.queue.sort()  # rearrange q to account for decreased v.dis
   return getSSP(g, s)

@@ -30,8 +30,8 @@ class Vertex(Tagged):
     self.col = VColor.White
   def init(self) -> None: self.__init__(self.tag)
 
-  def __str__(self) -> str: return f"{self.tag}: {self.showParent()} {self.showTimes()}"
-  def show(self) -> str: return f"{self.tag}{f': {self.showTimes()}' if self.dis != Infinity else ''}"
+  def __str__(self) -> str: return f"{self.tag} {self.showParent()} {self.showTimes()}"
+  def show(self) -> str: return f"{self.tag}{f' {self.showTimes()}' if self.dis != Infinity else ''}"
   def showParent(self) -> str: return "^" + self.par.tag if not self.isRoot() else "None"
   def showTimes(self) -> str: return f"{self.dis if self.dis != Infinity else ''}{f'/{self.fin}' if self.fin != -Infinity else ''}"
 
@@ -50,19 +50,19 @@ class EClass:
 
 class Edge(Tagged):
   def __init__(self, u: Vertex, v: Vertex):
-    super().__init__(makeEtag(u, v))
+    super().__init__(makeETag(u, v))
     self.u = u
     self.v = v
     self.cls = EClass.X
   def init(self) -> None: self.__init__(self.u, self.v)
 
-  def __str__(self) -> str: return f"{self.tag}: {self.showClassification()}"
+  def __str__(self) -> str: return f"{self.tag} {self.showClassification()}"
   def show(self) -> str: return f"{self.showClassification()}"
   def showClassification(self) -> str: return self.cls if self.cls != EClass.X else ""
 
   def isSelfLoop(self) -> bool: return self.u == self.v
 
-def makeEtag(u: Vertex, v: Vertex) -> Tag: return f"{u.tag}-{v.tag}"
+def makeETag(u: Vertex, v: Vertex) -> Tag: return f"{u.tag}-{v.tag}"
 
 ESet = Dict[Tag, Edge]
 
@@ -190,7 +190,7 @@ def bft(g: Graph, s: Vertex) -> Tree:
     if u == s or not u.isRoot(): t.insV(u)
   for u in t.getVV():
     if not u.isRoot():
-      e = g.getE(makeEtag(u.par, u))
+      e = g.getE(makeETag(u.par, u))
       t.insE(e)
   return t
 
@@ -203,7 +203,7 @@ def dfs(g: Graph) -> Graph:
     u.dis = time[0]
     u.col = VColor.Gray
     for v in g.adj(u):
-      e = g.getE(makeEtag(u, v))
+      e = g.getE(makeETag(u, v))
       if v.col == VColor.Black:
         e.cls = EClass.F if u.dis < v.dis else EClass.C
       elif v.col == VColor.Gray:
@@ -231,7 +231,7 @@ def dff(g: Graph) -> Graph:
   f.dupVV(g.vv)
   for v in f.getVV():
     if not v.isRoot():
-      e = g.getE(makeEtag(v.par, v))
+      e = g.getE(makeETag(v.par, v))
       f.insE(e)
   return f
 
@@ -253,7 +253,7 @@ class Component(Vertex):
     for u in vv: self.vv[u.tag] = u
   def getVV(self) -> List[Vertex]: return list(self.vv.values())
 
-def makeCid(vv: List[Vertex]) -> Tag: return "+".join([v.tag for v in vv])
+def makeCTag(vv: List[Vertex]) -> Tag: return "+".join([v.tag for v in vv])
 
 def scc(g: Graph) -> Graph:
   g = dfs(g)
@@ -287,7 +287,7 @@ def contract(g: Graph, f: Graph) -> Graph:
   # create vertices of SCC c
   for r in [v for v in g.getVV() if v.isRoot()]:  # for each root vertex r in DFS g
     vv = [r, *scv(r)]  # strongly connected vertices rooted at vertex r
-    x = Component(makeCid(vv))  # create component x by merging strongly connected vertices vv
+    x = Component(makeCTag(vv))  # create component x by merging strongly connected vertices vv
     x.insVV(vv)
     c.insV(x)  # insert component x into SCC c
   # create edges of SCC c
@@ -313,7 +313,7 @@ def draw(g: Union[Graph, Tree], directed: bool, label: str = "", engine: str = "
   for v in g.getVV(): gv.node(v.tag, label=v.show(), shape=f"{'rectangle' if v.isRoot() else 'ellipse'}")
   ed = {}  # already drawn edges
   for e in g.getEE():
-    vutag = makeEtag(e.v, e.u)
+    vutag = makeETag(e.v, e.u)
     if directed or vutag not in ed.keys():  # for undirected graph, avoid drawing (u, v) if (v, u) has already been drawn
       gv.edge(e.u.tag, e.v.tag, label=e.show())
       ed[e.tag] = e
