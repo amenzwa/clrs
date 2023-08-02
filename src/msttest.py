@@ -10,7 +10,7 @@ from unittest import TestCase
 from src.graph import draw
 from src.mst import MSTGraph, PrimMSTGraph, mstKruskal, mstPrim
 
-## Kruskal's MST
+## Kruskal's MST algorithm
 
 class KruskalMSTTestCase(TestCase):
   vs = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
@@ -66,12 +66,12 @@ class KruskalMSTTestCase(TestCase):
 
   def testBFS(self) -> None:
     print(self.g)
-    draw(self.g, directed=False, label=f"{self.g.tag} connected, undirected graph").render(f"vis-{self.g.tag}")
+    draw(self.g, directed=False, label=f"{self.g.tag} connected, undirected graph").render(f"viz-{self.g.tag}")
     t = mstKruskal(self.g)
     print(t)
-    draw(t, directed=False, label=f"{t.tag} Minimum Spanning Tree").render(f"vis-{t.tag}")
+    draw(t, directed=False, label=f"{t.tag} Minimum Spanning Tree").render(f"viz-{t.tag}")
 
-## Prim's MST
+## Prim's MST algorithm
 
 class PrimMSTTestCase(TestCase):
   vs = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
@@ -129,4 +129,4 @@ class PrimMSTTestCase(TestCase):
     # noinspection PyTypeChecker
     t = mstPrim(self.g, self.g.getV("a"))  # disable type inspection, because the vertex here is certain to be PriVertex, not Vertex
     print(t)
-    draw(t, directed=False, label=f"{t.tag} Minimum Spanning Tree").render(f"vis-{t.tag}")
+    draw(t, directed=False, label=f"{t.tag} Minimum Spanning Tree").render(f"viz-{t.tag}")

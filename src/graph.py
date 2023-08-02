@@ -121,6 +121,8 @@ class VE(Tagged):
     return True if u == v else reachable(u)  # self-loop or path
   def isDescendant(self, v: Vertex, u: Vertex) -> bool:
     return self.isAncestor(u, v)
+  def hasV(self, vtag: Tag) -> bool:
+    return vtag in self.vv
 
   # edge
 
@@ -136,12 +138,18 @@ class VE(Tagged):
     return list(self.ee.values())
   def numEE(self) -> int:
     return len(self.getEE())
-  def hasE(self, e: Edge) -> bool:
-    return e.tag in self.ee
+  def hasE(self, etag: Tag) -> bool:
+    return etag in self.ee
 
 class Graph(VE): pass
 
 class Tree(VE): pass
+
+def init(g: Graph) -> None:
+  for u in g.getVV():
+    u.par = None
+    u.dis = Infinity
+    u.col = VColor.White
 
 ## §20.2 Breadth-first search p.554
 
@@ -161,10 +169,7 @@ def bfs(g: Graph, s: Vertex) -> Graph:
     return explore()
 
   # initialize
-  for u in g.getVV():
-    u.par = None
-    u.dis = Infinity
-    u.col = VColor.White
+  init(g)
   # s discovered
   s.par = None
   s.dis = 0
@@ -209,9 +214,7 @@ def dfs(g: Graph) -> Graph:
     u.col = VColor.Black
 
   # initialize
-  for u in g.getVV():
-    u.par = None
-    u.col = VColor.White
+  init(g)
   # search g
   time = [0]  # use array instead of a scalar to allow explore() to mutate time
   for u in g.getVV():
@@ -265,7 +268,7 @@ def transpose(g: Graph) -> Graph:
 
 def sort(g: Graph, attr: Callable[[Vertex], int], reverse: bool = False) -> Graph:
   # sort vertices
-  s = Graph(f"{g.tag}$")
+  s = Graph(f"{g.tag}§")
   for u in sorted(g.getVV(), key=attr, reverse=reverse): s.insV(u)  # sorted vertices
   s.dupEE(g.ee)
   return s

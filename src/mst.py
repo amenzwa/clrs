@@ -40,7 +40,7 @@ class MSTGraph(Graph):
         e = WgtEdge(u, v, ew[makeEtag(u, v)])
         self.ee[e.tag] = e
 
-## Kruskal's MST
+## Kruskal's MST algorithm p.592
 
 def mstKruskal(g: MSTGraph) -> Tree:
   # initialize
@@ -81,7 +81,7 @@ class PrimMSTGraph(MSTGraph):
   def makeV(self, vs: List[Tag]) -> None:
     for vtag in vs: self.vv[vtag] = PriVertex(vtag)
 
-## Prim's MST
+## Prim's MST algorithm p.594
 
 def mstPrim(g: MSTGraph, r: PriVertex) -> Tree:
   # initialize

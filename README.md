@@ -4,7 +4,7 @@
 
 This project provides implementations of, and commentaries on, some of the interesting algorithms described in the well known textbook [*Introduction to Algorithms*](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) by Professors Cormen, Leiserson, Rivest, and Stein (CLRS 4ed 2022; formerly CLR 1ed 1990). The Python implementations and the associated commentaries are presented as [Jupyter](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) notebook interactive documents.
 
-The main purpose here is to show how to convert the English descriptions of algorithms given in CLRS into *code* and how to use the theorems, lemmas, and other mathematical properties proven therein to implement *test* cases for the code. That is, the aim is not to provide a comprehensive implementations of CLRS algorithms, but to focus on the process of closely reading a mathematical textbook like this, following its arguments and proofs, converting algorithm text into code, and testing the implementations against proven mathematical properties.
+The main purpose here is to show how to convert the English descriptions of algorithms given in CLRS into *code* and how to use the theorems, lemmas, corollaries, and other mathematical properties proven therein to implement *test* cases for the code. That is, the aim is not to provide a comprehensive implementations of CLRS algorithms, but to focus on the process of closely reading a mathematical textbook like this, following its arguments and proofs, converting algorithm text into code, and testing the implementations against proven mathematical properties.
 
 Jupyter is chosen for its excellent [literate programming](https://en.wikipedia.org/wiki/Literate_programming) environment that produces documents containing both mathematical text and runnable code. Python is chosen because it is one of the most comprehensible programming languages. It is fairly succinct, has a reasonably small syntactic constructs, and possesses relatively few quirks. But more importantly, it is an imperative language. Most textbooks, including CLRS, present decidedly imperative algorithms.
 
@@ -23,6 +23,8 @@ This is an ongoing project. The first "commit" consists of graph representation,
     - [`graphtest.ipynb`](./graphtest.ipynb)—tests of BFS and DFS algorithms with visualisations
     - [`mst.ipynb`](./mst.ipynb)—Kruskal's and Prim's MST algorithms from Chapter 21
       - [`msttest.ipynb`](./msttest.ipynb)—tests of MST algorithms with visualisations
+      - [`ssp.ipynb`](./ssp.ipynb)—Bellman-Ford and Dijkstra's SSP algorithms from Chapter 22
+        - [`ssptest.ipynb`](ssptest.ipynb)—tests of SSP algorithms with visualisations
 
 The `graph.ipynb` notebook is where to start reading about graph algorithms.
 
@@ -30,9 +32,11 @@ The `graph.ipynb` notebook is where to start reading about graph algorithms.
 
 - `src/util.py`—utility types and functions
   - `src/graph.py`—graph representation, BFS, and DFS from Chapter 20
-    - `src/graphtest.py`—tests of BFS and DFS algorithms with visualisations (`vis-*` output files)
+    - `src/graphtest.py`—tests of BFS and DFS algorithms with visualisations (`viz-*` output files)
     - `src/mst.py`—Kruskal's and Prim's MST algorithms from Chapter 21
       - `src/msttest.py`—tests of MST algorithms with visualisations
+      - `src/ssp.py`—Bellman-Ford and Dijkstra's SSP algorithms from Chapter 22
+        - `src/ssptest.py`—tests of SSP algorithms with visualisations
 
 
 # INSTALLATION
