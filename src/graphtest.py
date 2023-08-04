@@ -15,23 +15,23 @@ def dummy() -> None: pass
 ## BFS
 
 class BFSTestCase(TestCase):
-  vs = ["s", "r", "t", "u", "v", "w", "x", "y", "z"]
-  es = {
-    "s": ["r", "u", "v"],  # source
-    "r": ["s", "t", "w"],
-    "t": ["r", "u"],
-    "u": ["s", "t", "y"],
-    "v": ["s", "w", "y"],
-    "w": ["r", "v", "x", "z"],
-    "x": ["w", "y", "z"],
-    "y": ["u", "v", "x"],
-    "z": ["w", "x"],
-  }
+  # Figure 20.3 p.557
+  vt = ["s", "r", "t", "u", "v", "w", "x", "y", "z"]
+  et = [
+    "s-r", "s-u", "s-v",
+    "r-s", "r-t", "r-w",
+    "t-r", "t-u",
+    "u-s", "u-t", "u-y",
+    "v-s", "v-w", "v-y",
+    "w-r", "w-v", "w-x", "w-z",
+    "x-w", "x-y", "x-z",
+    "y-u", "y-v", "y-x",
+    "z-w", "z-x", ]
   g = Graph("dummy")
 
   def setUp(self) -> None:
     self.g = Graph("BFS")
-    self.g.makeVE(self.vs, self.es)
+    self.g.makeVE(self.vt, self.et)
 
   def tearDown(self) -> None:
     pass
@@ -49,20 +49,20 @@ class BFSTestCase(TestCase):
 ## DFS
 
 class DFSTestCase(TestCase):
-  vs = ["u", "v", "w", "x", "y", "z"]
-  es = {  # directed edges
-    "u": ["v", "x"],
-    "v": ["y"],
-    "w": ["y", "z"],
-    "x": ["v"],
-    "y": ["x"],
-    "z": ["z"],
-  }
+  # Figure 20.4 p.566
+  vt = ["u", "v", "w", "x", "y", "z"]
+  et = [  # directed edges
+    "u-v", "u-x",
+    "v-y",
+    "w-y", "w-z",
+    "x-v",
+    "y-x",
+    "z-z", ]
   g = Graph("dummy")
 
   def setUp(self) -> None:
     self.g = Graph("DFS")
-    self.g.makeVE(self.vs, self.es)
+    self.g.makeVE(self.vt, self.et)
 
   def tearDown(self) -> None:
     pass
@@ -86,23 +86,20 @@ class DFSTestCase(TestCase):
 ## TSort
 
 class TSortTestCase(TestCase):
-  vs = ["belt", "jacket", "pants", "shirt", "shoes", "socks", "tie", "undershorts", "watch"]
-  es = {  # directed edges
-    "belt": ["jacket"],
-    "jacket": [],
-    "pants": ["belt", "shoes"],
-    "shirt": ["belt", "tie"],
-    "shoes": [],
-    "socks": ["shoes"],
-    "tie": ["jacket"],
-    "undershorts": ["pants", "shoes"],
-    "watch": [],
-  }
+  # Figure 20.7 p.574
+  vt = ["belt", "jacket", "pants", "shirt", "shoes", "socks", "tie", "undershorts", "watch"]
+  et = [  # directed edges
+    "belt-jacket",
+    "pants-belt", "pants-shoes",
+    "shirt-belt", "shirt-tie",
+    "socks-shoes",
+    "tie-jacket",
+    "undershorts-pants", "undershorts-shoes", ]
   g = Graph("dummy")
 
   def setUp(self) -> None:
     self.g = Graph("TSort")
-    self.g.makeVE(self.vs, self.es)
+    self.g.makeVE(self.vt, self.et)
 
   def tearDown(self) -> None:
     pass
@@ -115,22 +112,22 @@ class TSortTestCase(TestCase):
 ## SCC
 
 class SCCTestCase(TestCase):
-  vs = ["a", "b", "c", "d", "e", "f", "g", "h"]
-  es = {  # directed edges
-    "a": ["b"],
-    "b": ["c", "e", "f"],
-    "c": ["d", "g"],
-    "d": ["c", "h"],
-    "e": ["a", "f"],
-    "f": ["g"],
-    "g": ["f", "h"],
-    "h": ["h"],
-  }
+  # Figure 20.9 p.577
+  vt = ["a", "b", "c", "d", "e", "f", "g", "h"]
+  et = [  # directed edges
+    "a-b",
+    "b-c", "b-e", "b-f",
+    "c-d", "c-g",
+    "d-c", "d-h",
+    "e-a", "e-f",
+    "f-g",
+    "g-f", "g-h",
+    "h-h", ]
   g = Graph("dummy")
 
   def setUp(self) -> None:
     self.g = Graph("SCC")
-    self.g.makeVE(self.vs, self.es)
+    self.g.makeVE(self.vt, self.et)
 
   def tearDown(self) -> None:
     pass

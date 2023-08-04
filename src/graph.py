@@ -8,7 +8,7 @@ Copyright sOnit, Inc. 2023
 
 from functools import reduce
 from queue import Queue
-from typing import Callable, Dict, List, Union
+from typing import Callable, Dict, List, Tuple, Union
 
 import graphviz as V
 
@@ -64,6 +64,8 @@ class Edge(Tagged):
 
 def makeETag(u: Vertex, v: Vertex) -> Tag: return f"{u.tag}-{v.tag}"
 
+def parseETag(etag: Tag) -> Tuple[Tag, Tag]: return etag.split("-")
+
 ESet = Dict[Tag, Edge]
 
 ## graph and tree
@@ -77,16 +79,16 @@ class VE(Tagged):
     for u in self.getVV(): u.init()
     for e in self.getEE(): e.init()
 
-  def makeVE(self, vs: List[Tag], es: Dict[Tag, List[Tag]]) -> None:
-    self.makeV(vs)
-    self.makeE(es)
-  def makeV(self, vs: List[Tag]) -> None:
-    for vtag in vs: self.vv[vtag] = Vertex(vtag)
-  def makeE(self, es: Dict[Tag, List[Tag]]) -> None:
-    for uid, vtags in es.items():
-      for vtag in vtags:
-        e = Edge(self.getV(uid), self.getV(vtag))
-        self.ee[e.tag] = e
+  def makeVE(self, vt: List[Tag], et: List[Tag]) -> None:
+    self.makeV(vt)
+    self.makeE(et)
+  def makeV(self, vt: List[Tag]) -> None:
+    for vtag in vt: self.vv[vtag] = Vertex(vtag)
+  def makeE(self, et: List[Tag]) -> None:
+    for etag in et:
+      [utag, vtag] = parseETag(etag)
+      e = Edge(self.getV(utag), self.getV(vtag))
+      self.ee[e.tag] = e
 
   def __str__(self) -> str:
     return self.tag + "\n" + self.showVertices() + "\n" + self.showEdges()
@@ -136,8 +138,8 @@ class VE(Tagged):
     self.ee.pop(e.tag)
   def dupEE(self, ee: ESet) -> None:
     self.ee = {**ee}
-  def getE(self, eid: Tag) -> Edge:
-    return self.ee[eid]
+  def getE(self, etag: Tag) -> Edge:
+    return self.ee[etag]
   def getEE(self) -> List[Edge]:
     return list(self.ee.values())
   def numEE(self) -> int:

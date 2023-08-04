@@ -9,7 +9,7 @@ Copyright sOnit, Inc. 2023
 from queue import PriorityQueue
 from typing import Dict, List
 
-from src.graph import ESet, Edge, Graph, Tree, Vertex, makeETag
+from src.graph import ESet, Edge, Graph, Tree, Vertex, makeETag, parseETag
 from src.util import DSet, Infinity, Tag
 
 ## weighted edge
@@ -29,16 +29,14 @@ class MSTGraph(Graph):
   def __init__(self, tag: Tag):
     super().__init__(tag)
 
-  def makeVEw(self, vs: List[Tag], es: Dict[Tag, List[Tag]], ew: Dict[Tag, float]) -> None:
-    self.makeV(vs)
-    self.makeEw(es, ew)
-  def makeEw(self, es: Dict[Tag, List[Tag]], ew: Dict[Tag, float]) -> None:
-    for utag, vtags in es.items():
-      for vtag in vtags:
-        u = self.getV(utag)
-        v = self.getV(vtag)
-        e = WgtEdge(u, v, ew[makeETag(u, v)])
-        self.ee[e.tag] = e
+  def makeVEw(self, vt: List[Tag], et: List[Tag], ew: Dict[Tag, float]) -> None:
+    self.makeV(vt)
+    self.makeEw(et, ew)
+  def makeEw(self, et: List[Tag], ew: Dict[Tag, float]) -> None:
+    for etag in et:
+      [utag, vtag] = parseETag(etag)
+      e = WgtEdge(self.getV(utag), self.getV(vtag), ew[etag])
+      self.ee[e.tag] = e
 
 ## Kruskal's MST algorithm p.592
 
@@ -78,8 +76,8 @@ class PrimMSTGraph(MSTGraph):
   def __init__(self, tag: Tag):
     super().__init__(tag)
 
-  def makeV(self, vs: List[Tag]) -> None:
-    for vtag in vs: self.vv[vtag] = PriVertex(vtag)
+  def makeV(self, vt: List[Tag]) -> None:
+    for vtag in vt: self.vv[vtag] = PriVertex(vtag)
 
 ## Prim's MST algorithm p.594
 

@@ -15,31 +15,24 @@ from src.util import isSome
 
 class BellmanFordSSPTestCase(TestCase):
   # Figure 22.4 p.613
-  vs = ["s", "t", "x", "y", "z"]
-  es = {  # directed edges
-    "s": ["t", "y"],
-    "t": ["x", "y", "z"],
-    "x": ["t"],
-    "y": ["x", "z"],
-    "z": ["s", "x"],
-  }
+  vt = ["s", "t", "x", "y", "z"]
+  et = [  # directed edges
+    "s-t", "s-y",
+    "t-x", "t-y", "t-z",
+    "x-t",
+    "y-x", "y-z",
+    "z-s", "z-x", ]
   ew = {
-    "s-t": 6,
-    "s-y": 7,
-    "t-x": 5,
-    "t-y": 8,
-    "t-z": -4,
+    "s-t": 6, "s-y": 7,
+    "t-x": 5, "t-y": 8, "t-z": -4,
     "x-t": -2,
-    "y-x": -3,
-    "y-z": 9,
-    "z-s": 2,
-    "z-x": 7,
-  }
+    "y-x": -3, "y-z": 9,
+    "z-s": 2, "z-x": 7, }
   g = SSPGraph("dummy")
 
   def setUp(self) -> None:
     self.g = SSPGraph("Bellman-Ford")
-    self.g.makeVEw(self.vs, self.es, self.ew)
+    self.g.makeVEw(self.vt, self.et, self.ew)
 
   def tearDown(self) -> None:
     pass
@@ -55,32 +48,24 @@ class BellmanFordSSPTestCase(TestCase):
 
 class BellmanFordDAWGTestCase(TestCase):
   # Figure 22.5 p.618
-  vs = ["r", "s", "t", "x", "y", "z"]
-  es = {  # directed edges
-    "r": ["s", "t"],
-    "s": ["t", "x"],
-    "t": ["x", "y", "z"],
-    "x": ["y", "z"],
-    "y": ["z"],
-    "z": [],
-  }
+  vt = ["r", "s", "t", "x", "y", "z"]
+  et = [  # directed edges
+    "r-s", "r-t",
+    "s-t", "s-x",
+    "t-x", "t-y", "t-z",
+    "x-y", "x-z",
+    "y-z", ]
   ew = {
-    "r-s": 5,
-    "r-t": 3,
-    "s-t": 2,
-    "s-x": 6,
-    "t-x": 7,
-    "t-y": 4,
-    "t-z": 2,
-    "x-y": -1,
-    "x-z": 1,
-    "y-z": -2,
-  }
+    "r-s": 5, "r-t": 3,
+    "s-t": 2, "s-x": 6,
+    "t-x": 7, "t-y": 4, "t-z": 2,
+    "x-y": -1, "x-z": 1,
+    "y-z": -2, }
   g = SSPGraph("dummy")
 
   def setUp(self) -> None:
     self.g = SSPGraph("Bellman-Ford DAWG")
-    self.g.makeVEw(self.vs, self.es, self.ew)
+    self.g.makeVEw(self.vt, self.et, self.ew)
 
   def tearDown(self) -> None:
     pass
@@ -96,31 +81,24 @@ class BellmanFordDAWGTestCase(TestCase):
 
 class DijkstraSSPTestCase(TestCase):
   # Figure 22.6 p.621
-  vs = ["s", "t", "x", "y", "z"]
-  es = {  # directed edges
-    "s": ["t", "y"],
-    "t": ["x", "y"],
-    "x": ["z"],
-    "y": ["t", "x", "z"],
-    "z": ["s", "x"],
-  }
+  vt = ["s", "t", "x", "y", "z"]
+  et = [  # directed edges
+    "s-t", "s-y",
+    "t-x", "t-y",
+    "x-z",
+    "y-t", "y-x", "y-z",
+    "z-s", "z-x", ]
   ew = {
-    "s-t": 10,
-    "s-y": 5,
-    "t-x": 1,
-    "t-y": 2,
+    "s-t": 10, "s-y": 5,
+    "t-x": 1, "t-y": 2,
     "x-z": 4,
-    "y-t": 3,
-    "y-x": 9,
-    "y-z": 2,
-    "z-s": 7,
-    "z-x": 6,
-  }
+    "y-t": 3, "y-x": 9, "y-z": 2,
+    "z-s": 7, "z-x": 6, }
   g = SSPGraph("dummy")
 
   def setUp(self) -> None:
     self.g = DijkstraSSPGraph("Dijkstra")
-    self.g.makeVEw(self.vs, self.es, self.ew)
+    self.g.makeVEw(self.vt, self.et, self.ew)
 
   def tearDown(self) -> None:
     pass
