@@ -95,7 +95,7 @@ def sspDijkstra(g: SSPGraph, s: PriVert) -> Tree:
   for u in g.getVV(): q.put(u)
   # discover SSP in graph g
   while not q.empty():
-    u: PriVert = q.get()
+    u = q.get()
     b[u.tag] = u
     for v in g.adj(u):
       if relax(g.getE(makeETag(u, v))):

@@ -93,7 +93,7 @@ def mstPrim(g: MSTGraph, r: PriVert) -> Tree:
   while not q.empty():
     u = q.get()
     for v in g.adj(u):
-      e: WgtEdge = g.getE(makeETag(u, v))
+      e = g.getE(makeETag(u, v))
       if v in q.queue and e.wgt < v.pri:
         v.par = u
         v.pri = e.wgt
