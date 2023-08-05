@@ -53,7 +53,6 @@ class MSTTestCase(TestCase):
   def testPrim(self) -> None:
     self.g = PrimMSTGraph("MST")
     self.g.makeVEw(self.vt, self.et, self.ew)
-    # noinspection PyTypeChecker
-    t = mstPrim(self.g, self.g.getV("a"))  # disable type inspection, because the vertex here is certain to be PriVertex, not Vertex
+    t = mstPrim(self.g, self.g.getV("a"))
     print(t)
     draw(t, directed=False, label=f"{t.tag} Prim Minimum Spanning Tree").render(f"viz-{t.tag}Prim")

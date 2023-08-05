@@ -8,7 +8,7 @@ Copyright sOnit, Inc. 2023
 
 from functools import reduce
 from queue import Queue
-from typing import Callable, Dict, List, Tuple, Union
+from typing import Callable, Dict, Generic, List, Tuple, TypeVar, Union
 
 import graphviz as V
 
@@ -21,10 +21,10 @@ class VColor:
   Gray = "Gray"
   Black = "Black"
 
-class Vertex(Tagged):
+class Vert(Tagged):
   def __init__(self, tag: Tag):
     super().__init__(tag)
-    self.par: Option[Vertex] = None
+    self.par: Option[Vert] = None
     self.dis = Infinity
     self.fin = -Infinity
     self.col = VColor.White
@@ -37,7 +37,8 @@ class Vertex(Tagged):
 
   def isRoot(self) -> bool: return isNone(self.par)
 
-VSet = Dict[Tag, Vertex]
+β = TypeVar("β")
+VSet = Dict[Tag, β]
 
 ## edge
 
@@ -49,7 +50,7 @@ class EClass:
   C = "C"  # cross edge
 
 class Edge(Tagged):
-  def __init__(self, u: Vertex, v: Vertex):
+  def __init__(self, u: Vert, v: Vert):
     super().__init__(makeETag(u, v))
     self.u = u
     self.v = v
@@ -62,15 +63,16 @@ class Edge(Tagged):
 
   def isSelfLoop(self) -> bool: return self.u == self.v
 
-def makeETag(u: Vertex, v: Vertex) -> Tag: return f"{u.tag}-{v.tag}"
+def makeETag(u: Vert, v: Vert) -> Tag: return f"{u.tag}-{v.tag}"
 
 def parseETag(etag: Tag) -> Tuple[Tag, Tag]: return etag.split("-")
 
-ESet = Dict[Tag, Edge]
+ϵ = TypeVar("ϵ")
+ESet = Dict[Tag, ϵ]
 
 ## graph and tree
 
-class VE(Tagged):
+class VE(Tagged, Generic[β, ϵ]):
   def __init__(self, tag: Tag):
     super().__init__(tag)
     self.vv: VSet = {}
@@ -83,7 +85,7 @@ class VE(Tagged):
     self.makeV(vt)
     self.makeE(et)
   def makeV(self, vt: List[Tag]) -> None:
-    for vtag in vt: self.vv[vtag] = Vertex(vtag)
+    for vtag in vt: self.vv[vtag] = Vert(vtag)
   def makeE(self, et: List[Tag]) -> None:
     for etag in et:
       [utag, vtag] = parseETag(etag)
@@ -93,54 +95,54 @@ class VE(Tagged):
   def __str__(self) -> str:
     return self.tag + "\n" + self.showVertices() + "\n" + self.showEdges()
   def showVertices(self) -> str:
-    def neighbors(u: Vertex) -> str: return ",".join([v.tag for v in self.adj(u)])
+    def neighbors(u: β) -> str: return ",".join([v.tag for v in self.adj(u)])
     return "\n".join([f"  {u}\n    [{neighbors(u)}]" for u in self.getVV()])
   def showEdges(self) -> str:
     return "\n".join([f"  {e}" for e in self.getEE()])
 
   # vertex
 
-  def insV(self, v: Vertex) -> None:
+  def insV(self, v: β) -> None:
     self.vv[v.tag] = v
-  def delV(self, v: Vertex) -> None:
+  def delV(self, v: β) -> None:
     self.vv.pop(v.tag)
   def dupVV(self, vv: VSet) -> None:
     self.vv = {**vv}
-  def getV(self, vtag: Tag) -> Vertex:
+  def getV(self, vtag: Tag) -> β:
     return self.vv[vtag]
-  def getVV(self) -> List[Vertex]:
+  def getVV(self) -> List[β]:
     return list(self.vv.values())
   def numVV(self) -> int:
     return len(self.getVV())
-  def adj(self, u: Vertex) -> List[Vertex]:
+  def adj(self, u: β) -> List[β]:
     return [self.getV(e.v.tag) for e in self.getEE() if e.u.tag == u.tag]
-  def path(self, s: Vertex, v: Vertex) -> List[Vertex]:
+  def path(self, s: β, v: β) -> List[β]:
     # see p.562
     if v.isRoot(): return []
     return [s] if v == s else [v, *self.path(s, v.par)]
-  def isAncestor(self, u: Vertex, v: Vertex) -> bool:
+  def isAncestor(self, u: β, v: β) -> bool:
     # check if vertex u is the ancestor of vertex v (there exists a path from u ~> v)
-    def reachable(a: Vertex) -> bool:
+    def reachable(a: β) -> bool:
       # check if a can reach v
       aa = self.adj(a)  # edge a -> v
       return True if v in aa else reduce(lambda acc, b: acc or reachable(b), aa, False)  # path a ~> v
     return True if u == v else reachable(u)  # self-loop or path
-  def isDescendant(self, v: Vertex, u: Vertex) -> bool:
+  def isDescendant(self, v: β, u: β) -> bool:
     return self.isAncestor(u, v)
   def hasV(self, vtag: Tag) -> bool:
     return vtag in self.vv
 
   # edge
 
-  def insE(self, e: Edge) -> None:
+  def insE(self, e: ϵ) -> None:
     self.ee[e.tag] = e
-  def delE(self, e: Edge) -> None:
+  def delE(self, e: ϵ) -> None:
     self.ee.pop(e.tag)
   def dupEE(self, ee: ESet) -> None:
     self.ee = {**ee}
-  def getE(self, etag: Tag) -> Edge:
+  def getE(self, etag: Tag) -> ϵ:
     return self.ee[etag]
-  def getEE(self) -> List[Edge]:
+  def getEE(self) -> List[ϵ]:
     return list(self.ee.values())
   def numEE(self) -> int:
     return len(self.getEE())
@@ -159,7 +161,7 @@ def init(g: Graph) -> None:
 
 ## §20.2 Breadth-first search p.554
 
-def bfs(g: Graph, s: Vertex) -> Graph:
+def bfs(g: Graph, s: Vert) -> Graph:
   def explore() -> Graph:
     if q.empty(): return g
     u = q.get()
@@ -185,7 +187,7 @@ def bfs(g: Graph, s: Vertex) -> Graph:
   q.put(s)
   return explore()
 
-def bft(g: Graph, s: Vertex) -> Tree:
+def bft(g: Graph, s: Vert) -> Tree:
   g = bfs(g, s)
   t = Tree(f"{g.tag}†")
   for u in g.getVV():
@@ -199,7 +201,7 @@ def bft(g: Graph, s: Vertex) -> Tree:
 ## §20.3 Depth-first search p.563
 
 def dfs(g: Graph) -> Graph:
-  def explore(u: Vertex) -> None:
+  def explore(u: Vert) -> None:
     time[0] += 1
     # u discovered
     u.dis = time[0]
@@ -239,23 +241,23 @@ def dff(g: Graph) -> Graph:
 
 ## §20.4 Topological sort p.573
 
-def tsort(g: Graph) -> List[Vertex]:
+def tsort(g: Graph) -> List[Vert]:
   g = dfs(g)
   return sorted(g.getVV(), key=lambda u: u.fin, reverse=True)
 
 ## §20.5 Strongly connected components
 
-class Component(Vertex):
+class Comp(Vert):
   def __init__(self, tag: Tag):
     super().__init__(tag)
     self.vv: VSet = {}  # strongly connected vertices
   def init(self) -> None: self.__init__(self.tag)
 
-  def insVV(self, vv: List[Vertex]) -> None:
+  def insVV(self, vv: List[Vert]) -> None:
     for u in vv: self.vv[u.tag] = u
-  def getVV(self) -> List[Vertex]: return list(self.vv.values())
+  def getVV(self) -> List[Vert]: return list(self.vv.values())
 
-def makeCTag(vv: List[Vertex]) -> Tag: return "+".join([v.tag for v in vv])
+def makeCTag(vv: List[Vert]) -> Tag: return "+".join([v.tag for v in vv])
 
 def scc(g: Graph) -> Graph:
   g = dfs(g)
@@ -272,7 +274,7 @@ def transpose(g: Graph) -> Graph:
   for e in g.getEE(): r.insE(Edge(e.v, e.u))  # flip (u, v) to (v, u)
   return r
 
-def sort(g: Graph, attr: Callable[[Vertex], int], reverse: bool = False) -> Graph:
+def sort(g: Graph, attr: Callable[[Vert], int], reverse: bool = False) -> Graph:
   # sort vertices
   s = Graph(f"{g.tag}§")
   for u in sorted(g.getVV(), key=attr, reverse=reverse): s.insV(u)  # sorted vertices
@@ -281,7 +283,7 @@ def sort(g: Graph, attr: Callable[[Vertex], int], reverse: bool = False) -> Grap
 
 def contract(g: Graph, f: Graph) -> Graph:
   # contract DFS g using DFF f
-  def scv(u: Vertex) -> List[Vertex]:
+  def scv(u: Vert) -> List[Vert]:
     aa = f.adj(u)  # vertex u's adjacent vertices in DFF f
     return [] if not aa else [v := aa[0], *scv(v)]
 
@@ -289,12 +291,11 @@ def contract(g: Graph, f: Graph) -> Graph:
   # create vertices of SCC c
   for r in [v for v in g.getVV() if v.isRoot()]:  # for each root vertex r in DFS g
     vv = [r, *scv(r)]  # strongly connected vertices rooted at vertex r
-    x = Component(makeCTag(vv))  # create component x by merging strongly connected vertices vv
+    x = Comp(makeCTag(vv))  # create component x by merging strongly connected vertices vv
     x.insVV(vv)
     c.insV(x)  # insert component x into SCC c
   # create edges of SCC c
-  # noinspection PyTypeChecker
-  cc: List[Component] = c.getVV()  # components of SCC c; disable type inspection, because cc here is certain to be List[Component], not List[Vertex]
+  cc: List[Comp] = c.getVV()  # components of SCC c
   for x in cc:  # for each component x in SCC c
     aa: VSet = {}  # adjacent vertices of component x in DFS g
     vv = x.getVV()  # constituent vertices of component x

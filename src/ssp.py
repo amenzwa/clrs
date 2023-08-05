@@ -10,8 +10,8 @@ from functools import reduce
 from queue import PriorityQueue
 from typing import List, Union
 
-from src.graph import Tree, Vertex, makeETag, tsort
-from src.mst import MSTGraph, PrimMSTGraph, PriVertex, WgtEdge
+from src.graph import Tree, Vert, makeETag, tsort
+from src.mst import MSTGraph, PrimMSTGraph, PriVert, WgtEdge
 
 from src.util import Infinity, Option
 
@@ -19,7 +19,7 @@ from src.util import Infinity, Option
 
 SSPGraph = MSTGraph  # uses WgtEdge
 
-def init(g: SSPGraph, s: Vertex) -> None:
+def init(g: SSPGraph, s: Vert) -> None:
   # see p.609
   for u in g.getVV():
     u.par = None
@@ -37,20 +37,19 @@ def relax(e: WgtEdge) -> bool:
     return True
   return False
 
-def shortestPathWeight(g: SSPGraph, s: Vertex, v: Vertex) -> float:
+def shortestPathWeight(g: SSPGraph, s: Vert, v: Vert) -> float:
   # see p.604
   return [g.getE(makeETag(u.par, u)).wgt for u in path(s, v)]
 
 ## §22.1 Bellman-Ford algorithm p.612
 
-def sspBellmanFord(g: SSPGraph, s: Vertex) -> Option[Tree]:
+def sspBellmanFord(g: SSPGraph, s: Vert) -> Option[Tree]:
   # initialize
   init(g, s)
   # relax edges
   n = g.numVV()
-  # noinspection PyTypeChecker
   for i in range(1, n):  # iteration i ∈ [1, n)
-    for e in g.getEE(): relax(e)  # disable type inspection, because e here is certain to be WgtEdge, not Edge
+    for e in g.getEE(): relax(e)
   # check for negative-weight cycle
   for e in g.getEE():
     u = e.u
@@ -58,7 +57,7 @@ def sspBellmanFord(g: SSPGraph, s: Vertex) -> Option[Tree]:
     if v.dis > u.dis + e.wgt: return None  # found negative-weight cycle reachable from vertex s
   return getSSP(g, s)  # extract SSP p from graph g
 
-def getSSP(g: SSPGraph, s: Union[Vertex, PriVertex]) -> Tree:
+def getSSP(g: SSPGraph, s: Union[Vert, PriVert]) -> Tree:
   p = Tree(f"{g.tag}¶")
   p.insV(s)
   for u in g.getVV():
@@ -73,7 +72,7 @@ def getSSP(g: SSPGraph, s: Union[Vertex, PriVertex]) -> Tree:
 
 ## §22.2 Single-source shortest paths in directed acyclic graphs
 
-def sspBellmanFordDAWG(g: SSPGraph, s: Vertex) -> Option[Tree]:
+def sspBellmanFordDAWG(g: SSPGraph, s: Vert) -> Option[Tree]:
   vv = tsort(g)
   # initialize
   init(g, s)
@@ -86,7 +85,7 @@ def sspBellmanFordDAWG(g: SSPGraph, s: Vertex) -> Option[Tree]:
 
 DijkstraSSPGraph = PrimMSTGraph  # uses PriVertex
 
-def sspDijkstra(g: SSPGraph, s: PriVertex) -> Tree:
+def sspDijkstra(g: SSPGraph, s: PriVert) -> Tree:
   assert(reduce(lambda acc, e: acc and e.wgt >= 0, g.getEE(), True))
   # initialize
   init(g, s)
@@ -96,7 +95,7 @@ def sspDijkstra(g: SSPGraph, s: PriVertex) -> Tree:
   for u in g.getVV(): q.put(u)
   # discover SSP in graph g
   while not q.empty():
-    u: PriVertex = q.get()
+    u: PriVert = q.get()
     b[u.tag] = u
     for v in g.adj(u):
       if relax(g.getE(makeETag(u, v))):

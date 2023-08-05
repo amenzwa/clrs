@@ -9,13 +9,13 @@ Copyright sOnit, Inc. 2023
 from queue import PriorityQueue
 from typing import Dict, List
 
-from src.graph import ESet, Edge, Graph, Tree, Vertex, makeETag, parseETag
+from src.graph import ESet, Edge, Graph, Tree, Vert, makeETag, parseETag
 from src.util import DSet, Infinity, Tag
 
 ## weighted edge
 
 class WgtEdge(Edge):
-  def __init__(self, u: Vertex, v: Vertex, wgt: float = Infinity):
+  def __init__(self, u: Vert, v: Vert, wgt: float = Infinity):
     super().__init__(u, v)
     self.wgt: float = wgt
 
@@ -60,7 +60,7 @@ def mstKruskal(g: MSTGraph) -> Tree:
 
 ## prioritized vertex
 
-class PriVertex(Vertex):
+class PriVert(Vert):
   def __init__(self, tag: Tag):
     super().__init__(tag)
     self.pri: float = Infinity
@@ -68,7 +68,7 @@ class PriVertex(Vertex):
   def __str__(self) -> str: return f"{super().__str__()} {self.priority()}"
   def priority(self) -> str: return f"{self.pri if self.pri != Infinity else ''}"
 
-  def __lt__(self, v: "PriVertex") -> bool: return self.pri < v.pri  # needed by PriorityQueue
+  def __lt__(self, v: "PriVert") -> bool: return self.pri < v.pri  # needed by PriorityQueue
 
 ## Prim MST graph with prioritized vertices
 
@@ -77,11 +77,11 @@ class PrimMSTGraph(MSTGraph):
     super().__init__(tag)
 
   def makeV(self, vt: List[Tag]) -> None:
-    for vtag in vt: self.vv[vtag] = PriVertex(vtag)
+    for vtag in vt: self.vv[vtag] = PriVert(vtag)
 
 ## Prim's MST algorithm p.594
 
-def mstPrim(g: MSTGraph, r: PriVertex) -> Tree:
+def mstPrim(g: MSTGraph, r: PriVert) -> Tree:
   # initialize
   for u in g.getVV():
     u.par = None
@@ -93,8 +93,7 @@ def mstPrim(g: MSTGraph, r: PriVertex) -> Tree:
   while not q.empty():
     u = q.get()
     for v in g.adj(u):
-      # noinspection PyTypeChecker
-      e: WgtEdge = g.getE(makeETag(u, v))  # disable type inspection, because e here is certain to be WgtEdge, not Edge
+      e: WgtEdge = g.getE(makeETag(u, v))
       if v in q.queue and e.wgt < v.pri:
         v.par = u
         v.pri = e.wgt
