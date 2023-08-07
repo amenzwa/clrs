@@ -26,7 +26,7 @@ This is an ongoing project. The first "commit" consists of graph representation,
       - [`ssp.ipynb`](./ssp.ipynb)—Bellman-Ford and Dijkstra's SSP algorithms from Chapter 22
         - [`ssptest.ipynb`](ssptest.ipynb)—tests of SSP algorithms with visualisations
 
-The `graph.ipynb` notebook is where to start reading about graph algorithms.
+The `graph.ipynb` Jupyter notebook is where to start reading about graph algorithms.
 
 ## *Python*
 
@@ -37,6 +37,10 @@ The `graph.ipynb` notebook is where to start reading about graph algorithms.
       - `src/msttest.py`—tests of MST algorithms with visualisations
       - `src/ssp.py`—Bellman-Ford and Dijkstra's SSP algorithms from Chapter 22
         - `src/ssptest.py`—tests of SSP algorithms with visualisations
+
+The `test.py` in the project top-level directory contains the Python tests for the entire project. See below for the instructions on how to run theses tests from a terminal.
+
+
 
 
 # INSTALLATION
@@ -51,7 +55,7 @@ And those of a programming persuasion should use [VSCode](https://code.visualstu
 
 ![JupyterLab Desktop Settings dialogue](./images/JLDSettings.jpg)
 
-Next, type in the following shell commands in some folder, say `~/Documents/`, under which you wish to clone this project:
+Next, type in the following shell commands at the terminal in some folder, say `~/Documents/`, under which you wish to clone this project:
 
 ```bash
 $ ~/Documents
@@ -67,13 +71,24 @@ $ source ./jlab_server/activate
 (jlab_server) $ pip3 install -r ~/Documents/clrs/requirements.txt
 ```
 
+# RUNNING
+
 Now, run JLD again and press the **Open...** button on the welcome window, and select the folder `~/Documents/clrs` where you placed this project. You may now interact with the `.ipynb` notebooks.
 
 An IPython notebook is similar to a Python module. But a notebook differs from a module in a few important ways:
 
 - An IPython notebook, by nature, contains both the Markdown text and the Python code.
-- When you run JLD, it starts up a new session. If you open an existing notebook in this new session, the cells in the notebook are in their unevaluated states. If you now evaluate some cell lower in the notebook and this cell depends on some earlier cells, you will get "undefined" errors. So, it is advisable to perform **Run → Run All Cells** immediately after opening an existing notebook.
+- When you run JLD, it starts up a new session. If you open an existing notebook in this new session, the cells in the notebook are in their unevaluated states. If you now evaluate some cell lower in the notebook and this cell depends on some earlier cells, you will get "undefined" errors. So, it is advisable to perform **Run → Run All Cells** immediately after opening an existing notebook. Moreover, if the current notebook imports other notebooks, you must run all those dependencies first, before you run the current one.
 - Sometimes, a notebook cannot see updates made in other notebooks. It may then be necessary to perform **File → Reload Notebook from Disk**. If that did not resolve the issue, perform **Run → Restart Kernel and Run All Cells...**. And if nothing worked, quit JLD and start over again.
+
+To run the pure Python tests, type in these commands at the terminal in the project top-level directory `~/Documents/clrs`:
+
+```bash
+$ source ./venv/bin/activate # starts a new shell with the correct Python environment
+(venv) $ ./test.py
+```
+
+Many `viz-` files will appear in the directory. Those with the `.pdf` file name extension contain the graph renderings.
 
 # PHILOSOPHY
 

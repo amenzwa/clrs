@@ -77,7 +77,6 @@ class VE(Tagged, Generic[β, ϵ]):
     super().__init__(tag)
     self.vv: VSet = {}
     self.ee: ESet = {}
-  def init(self) -> None:
     for u in self.getVV(): u.init()
     for e in self.getEE(): e.init()
 
@@ -92,30 +91,21 @@ class VE(Tagged, Generic[β, ϵ]):
       e = Edge(self.getV(utag), self.getV(vtag))
       self.ee[e.tag] = e
 
-  def __str__(self) -> str:
-    return self.tag + "\n" + self.showVertices() + "\n" + self.showEdges()
+  def __str__(self) -> str: return self.tag + "\n" + self.showVertices() + "\n" + self.showEdges()
   def showVertices(self) -> str:
     def neighbors(u: β) -> str: return ",".join([v.tag for v in self.adj(u)])
     return "\n".join([f"  {u}\n    [{neighbors(u)}]" for u in self.getVV()])
-  def showEdges(self) -> str:
-    return "\n".join([f"  {e}" for e in self.getEE()])
+  def showEdges(self) -> str: return "\n".join([f"  {e}" for e in self.getEE()])
 
   # vertex
 
-  def insV(self, v: β) -> None:
-    self.vv[v.tag] = v
-  def delV(self, v: β) -> None:
-    self.vv.pop(v.tag)
-  def dupVV(self, vv: VSet) -> None:
-    self.vv = {**vv}
-  def getV(self, vtag: Tag) -> β:
-    return self.vv[vtag]
-  def getVV(self) -> List[β]:
-    return list(self.vv.values())
-  def numVV(self) -> int:
-    return len(self.getVV())
-  def adj(self, u: β) -> List[β]:
-    return [self.getV(e.v.tag) for e in self.getEE() if e.u.tag == u.tag]
+  def insV(self, v: β) -> None: self.vv[v.tag] = v
+  def delV(self, v: β) -> None: self.vv.pop(v.tag)
+  def dupVV(self, vv: VSet) -> None: self.vv = {**vv}
+  def getV(self, vtag: Tag) -> β: return self.vv[vtag]
+  def getVV(self) -> List[β]: return list(self.vv.values())
+  def numVV(self) -> int: return len(self.getVV())
+  def adj(self, u: β) -> List[β]: return [self.getV(e.v.tag) for e in self.getEE() if e.u.tag == u.tag]
   def path(self, s: β, v: β) -> List[β]:
     # see p.562
     if v.isRoot(): return []
@@ -127,27 +117,18 @@ class VE(Tagged, Generic[β, ϵ]):
       aa = self.adj(a)  # edge a -> v
       return True if v in aa else reduce(lambda acc, b: acc or reachable(b), aa, False)  # path a ~> v
     return True if u == v else reachable(u)  # self-loop or path
-  def isDescendant(self, v: β, u: β) -> bool:
-    return self.isAncestor(u, v)
-  def hasV(self, vtag: Tag) -> bool:
-    return vtag in self.vv
+  def isDescendant(self, v: β, u: β) -> bool: return self.isAncestor(u, v)
+  def hasV(self, vtag: Tag) -> bool: return vtag in self.vv
 
   # edge
 
-  def insE(self, e: ϵ) -> None:
-    self.ee[e.tag] = e
-  def delE(self, e: ϵ) -> None:
-    self.ee.pop(e.tag)
-  def dupEE(self, ee: ESet) -> None:
-    self.ee = {**ee}
-  def getE(self, etag: Tag) -> ϵ:
-    return self.ee[etag]
-  def getEE(self) -> List[ϵ]:
-    return list(self.ee.values())
-  def numEE(self) -> int:
-    return len(self.getEE())
-  def hasE(self, etag: Tag) -> bool:
-    return etag in self.ee
+  def insE(self, e: ϵ) -> None: self.ee[e.tag] = e
+  def delE(self, e: ϵ) -> None: self.ee.pop(e.tag)
+  def dupEE(self, ee: ESet) -> None: self.ee = {**ee}
+  def getE(self, etag: Tag) -> ϵ: return self.ee[etag]
+  def getEE(self) -> List[ϵ]: return list(self.ee.values())
+  def numEE(self) -> int: return len(self.getEE())
+  def hasE(self, etag: Tag) -> bool: return etag in self.ee
 
 class Graph(VE): pass
 
