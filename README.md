@@ -41,7 +41,7 @@ The `graph.ipynb` notebook is where to start reading about graph algorithms.
 
 # INSTALLATION
 
-First, you must have a copy of CLRS 4ed and you will want to be able to interact with the `.ipynb` IPython notebooks. If you merely wish to read the pre-rendered documents, just click on the `.ipynb` notebooks in this project [repository](https://github.com/amenzwa/clrs). GitHub will render the notebooks as static web pages.
+First, you must get a copy of CLRS 4ed. Then, you will want to be able to interact with the `.ipynb` IPython notebooks. If you merely wish to read the pre-rendered documents, just click on the `.ipynb` notebooks in this project [repository](https://github.com/amenzwa/clrs). GitHub will render the notebooks as static web pages.
 
 The simplest way to use the notebooks is use [MyBinder.org](https://mybinder.org/). All you need do is to type in the link `https://github.com/amenzwa/clrs` in the **GitHub repository name or URL** field on the Binder welcome page, as shown in the screenshot below. Go brew a cuppa, while the Binder cloud contemplates whether or not to run the notebooks.
 
@@ -79,7 +79,7 @@ An IPython notebook is similar to a Python module. But a notebook differs from a
 
 The implementations in this project are neither purely functional nor pure procedural; they are purely practical. They employ a mixture of procedural, objective, and functional techniques, whichever is easier to understand for the concept under consideration.
 
-Over the decades, the CS community has bee-n obsessed stodgily with purity: purely imperative, purely objective, purely functional, purely logical. On the other hand, the IT community has, philosophically and procedurally, continuously swung between the extremes, from blasé to pedantry, whichever is the flavour of the day.
+Over the decades, the CS community has been obsessed stodgily with purity: purely imperative, purely objective, purely functional, purely logical. On the other hand, the IT community has, philosophically and procedurally, incessantly swung between the extremes, from blasé to pedantry, whichever is the flavour of the day.
 
 What is now patently clear is that in software design and development, practicality trumps purity *and* pragmatic is superior to phlegmatic or pedantic. Note that these two clauses are joined with a conjunction.
 
@@ -87,14 +87,20 @@ What is now patently clear is that in software design and development, practical
 
 When you study CLRS, and indeed any mathematical inclined textbook, read it in at least three passes: scan, dive, and climb.
 
-First, *scan* the chapter. Pick up some key terms and concepts. Take in the figures. Do not worry about understanding every concept you encounter; just collect the phrases. Next, reread the chapter, but this time, *dive* deeply. Fill out those terms and concepts you picked up in your initial scan. Do not stop until you have grasped all the concepts presented in the chapter. Typically, the concepts presented in a chapter rely on those presented in the earlier chapters and, sometimes, reference those yet to be presented. If you have not read the earlier chapters, at least read deeply the cited section, and follow it up the citation chain, thoroughly. Once you have thoroughly studied the concepts and the dependant ones, take a break, and review the material at a very high level. This *climb* is similar to scan, but this time, you are skimming the cloud tops with a full knowledge of the material; you are no longer wandering and probing in the dark.
+First, *scan* the chapter. Pick up some key terms and concepts. Take in the figures. Do not worry about understanding every concept you encounter; just collect the key phrases.
 
-Once you have studied CLRS in this manner, you are read to plough through these notebooks.
+Next, reread the chapter, but this time, *dive* deeply. Fill out those terms and concepts you picked up in your initial scan. Do not stop until you have grasped all the concepts presented in the chapter. Typically, the concepts presented in a chapter rely on those presented in the earlier chapters and, sometimes, reference those yet to be presented. If you have not read the earlier chapters, at least read deeply the cited section, and follow it up the citation chain, thoroughly. Once you have thoroughly studied the concepts and the dependant ones, take a break.
+
+Upon your return to studying, review the material once more at a very high level, before moving on to other topics. This *climb* is similar to scan, but this time, you are skimming the cloud tops with a full knowledge of the material; you are no longer wandering and probing about in the dark.
+
+Study the cited chapters in CLRS in this manner, before you plough through these notebooks.
 
 # CAUTION
 
+It is obvious that CLRS presents at a conceptual level. A direct implementation of these algorithms, as it is done here, will not yield a highly-efficient, commercial-grade software. The main point of CLRS, and this project too, is to learn algorithms design, analysis, implementation, and testing.
+
 Jupyter, Mathematica, and similar literate programming environments are excellent for small, mathematical or technical projects that needs to combine textual description with sample code or data visualisation. Class projects, technical publications, internal-use scripts, and similar small projects are all candidates for Jupyter-based literate programming endeavour. Like all "documents", it is the author's responsibility to keep the entire document, not just the text or the code, up-to-date.
 
-However, if the project is large, like a typical enterprise application, using Jupyter will lead only to surprise and sadness. This is because Jupyter, while an excellent platform for its intended purpose—composing live, technical documents—is not at all appropriate for developing substantive applications with intricate dependencies.
+However, if the project is large, like a typical enterprise application, using Jupyter will lead only to surprise and sadness. This is because Jupyter, while an excellent platform for its intended purpose—composing interactive, technical documents on a small scale—is not at all appropriate for developing substantive applications with intricate dependencies.
 
 For example, even in the initial phase, this project is already fairly large, consisting of several reusable modules. The scope and size of this project will inevitably grow with time. Writing such substantial software in Jupyter is painful at best and, often, it is maddening. Refactoring in Jupyter can be a humbling experience. The solution is to develop the software in a proper IDE, like Emacs, VSCode, or IntelliJ IDEA, and then transfer the code snippets to Jupyter notebooks to be combined with the textual commentaries, while keeping a tight control over the use of global variables. This, obviously, is tedious and error-prone, but the effects justify the efforts.
