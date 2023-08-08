@@ -67,7 +67,7 @@ Then, we install the required Python packages into JLD's virtual environment usi
 ```bash
 $ brew install graphviz # required by Python graphviz graph visualisation library
 $ cd ~/Library/jupyterlab-desktop
-$ source ./jlab_server/activate
+$ source ./jlab_server/activate # start a new shell with JLD's Python version
 (jlab_server) $ pip3 install -r ~/Documents/clrs/requirements.txt
 ```
 
@@ -84,7 +84,7 @@ An IPython notebook is similar to a Python module. But a notebook differs from a
 To run the pure Python tests, type in these commands at the terminal in the project top-level directory `~/Documents/clrs`:
 
 ```bash
-$ source ./venv/bin/activate # starts a new shell with the correct Python environment
+$ source ./venv/bin/activate # starts a new shell with the latest Python version
 (venv) $ ./test.py
 ```
 
@@ -118,4 +118,8 @@ Jupyter, Mathematica, and similar literate programming environments are excellen
 
 However, if the project is large, like a typical enterprise application, using Jupyter will lead only to surprise and sadness. This is because Jupyter, while an excellent platform for its intended purpose—composing interactive, technical documents on a small scale—is not at all appropriate for developing substantive applications with intricate dependencies.
 
-For example, even in the initial phase, this project is already fairly large, consisting of several reusable modules. The scope and size of this project will inevitably grow with time. Writing such substantial software in Jupyter is painful at best and, often, it is maddening. Refactoring in Jupyter can be a humbling experience. The solution is to develop the software in a proper IDE, like Emacs, VSCode, or IntelliJ IDEA, and then transfer the code snippets to Jupyter notebooks to be combined with the textual commentaries, while keeping a tight control over the use of global variables. This, obviously, is tedious and error-prone, but the effects justify the efforts.
+For example, even in the initial phase, this project is already fairly large, consisting of several reusable modules. The scope and size of this project will inevitably grow with time. Writing such substantial software in Jupyter is painful at best and, often, it is maddening. Refactoring in Jupyter can be a humbling experience. The solution is to develop the software in a proper IDE, like Emacs, VSCode, or IntelliJ IDEA, and then transfer the code snippets to Jupyter notebooks to be combined with the textual commentaries, while keeping a tight control over the use of global variables.
+
+Another kink is that I opted to use the latest Python version for the pure Python implementations, so that I demonstrate the use the newest language facilities and syntactic improvements. That means I have to downgrade the syntax, when I convert the Python code into IPython code.
+
+All this, obviously, is quite vexing for me, but I hope the effects justify the efforts.

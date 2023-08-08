@@ -7,7 +7,6 @@ Copyright sOnit, Inc. 2023
 """
 
 from queue import PriorityQueue
-from typing import Dict, List
 
 from src.graph import ESet, Edge, Graph, Tree, Vert, makeETag, parseETag
 from src.util import DSet, Infinity, Tag
@@ -29,10 +28,10 @@ class MSTGraph(Graph):
   def __init__(self, tag: Tag):
     super().__init__(tag)
 
-  def makeVEw(self, vt: List[Tag], et: List[Tag], ew: Dict[Tag, float]) -> None:
+  def makeVEw(self, vt: [Tag], et: [Tag], ew: {Tag, float}) -> None:
     self.makeV(vt)
     self.makeEw(et, ew)
-  def makeEw(self, et: List[Tag], ew: Dict[Tag, float]) -> None:
+  def makeEw(self, et: [Tag], ew: {Tag, float}) -> None:
     for etag in et:
       [utag, vtag] = parseETag(etag)
       e = WgtEdge(self.getV(utag), self.getV(vtag), ew[etag])
@@ -76,7 +75,7 @@ class PrimMSTGraph(MSTGraph):
   def __init__(self, tag: Tag):
     super().__init__(tag)
 
-  def makeV(self, vt: List[Tag]) -> None:
+  def makeV(self, vt: [Tag]) -> None:
     for vtag in vt: self.vv[vtag] = PriVert(vtag)
 
 ## Prim's MST algorithm p.594

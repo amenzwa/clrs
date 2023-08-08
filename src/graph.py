@@ -8,7 +8,7 @@ Copyright sOnit, Inc. 2023
 
 from functools import reduce
 from queue import Queue
-from typing import Callable, Dict, Generic, List, Tuple, TypeVar, Union
+from typing import Callable, Generic, TypeVar
 
 import graphviz as V
 
@@ -38,7 +38,7 @@ class Vert(Tagged):
   def isRoot(self) -> bool: return isNone(self.par)
 
 β = TypeVar("β")
-VSet = Dict[Tag, β]
+VSet = {Tag, β}
 
 ## edge
 
@@ -65,10 +65,10 @@ class Edge(Tagged):
 
 def makeETag(u: Vert, v: Vert) -> Tag: return f"{u.tag}-{v.tag}"
 
-def parseETag(etag: Tag) -> Tuple[Tag, Tag]: return etag.split("-")
+def parseETag(etag: Tag) -> [Tag, Tag]: return etag.split("-")
 
 ϵ = TypeVar("ϵ")
-ESet = Dict[Tag, ϵ]
+ESet = {Tag, ϵ}
 
 ## graph and tree
 
@@ -80,12 +80,12 @@ class VE(Tagged, Generic[β, ϵ]):
     for u in self.getVV(): u.init()
     for e in self.getEE(): e.init()
 
-  def makeVE(self, vt: List[Tag], et: List[Tag]) -> None:
+  def makeVE(self, vt: [Tag], et: [Tag]) -> None:
     self.makeV(vt)
     self.makeE(et)
-  def makeV(self, vt: List[Tag]) -> None:
+  def makeV(self, vt: [Tag]) -> None:
     for vtag in vt: self.vv[vtag] = Vert(vtag)
-  def makeE(self, et: List[Tag]) -> None:
+  def makeE(self, et: [Tag]) -> None:
     for etag in et:
       [utag, vtag] = parseETag(etag)
       e = Edge(self.getV(utag), self.getV(vtag))
@@ -103,10 +103,10 @@ class VE(Tagged, Generic[β, ϵ]):
   def delV(self, v: β) -> None: self.vv.pop(v.tag)
   def dupVV(self, vv: VSet) -> None: self.vv = {**vv}
   def getV(self, vtag: Tag) -> β: return self.vv[vtag]
-  def getVV(self) -> List[β]: return list(self.vv.values())
+  def getVV(self) -> [β]: return list(self.vv.values())
   def numVV(self) -> int: return len(self.getVV())
-  def adj(self, u: β) -> List[β]: return [self.getV(e.v.tag) for e in self.getEE() if e.u.tag == u.tag]
-  def path(self, s: β, v: β) -> List[β]:
+  def adj(self, u: β) -> [β]: return [self.getV(e.v.tag) for e in self.getEE() if e.u.tag == u.tag]
+  def path(self, s: β, v: β) -> [β]:
     # see p.562
     if v.isRoot(): return []
     return [s] if v == s else [v, *self.path(s, v.par)]
@@ -126,7 +126,7 @@ class VE(Tagged, Generic[β, ϵ]):
   def delE(self, e: ϵ) -> None: self.ee.pop(e.tag)
   def dupEE(self, ee: ESet) -> None: self.ee = {**ee}
   def getE(self, etag: Tag) -> ϵ: return self.ee[etag]
-  def getEE(self) -> List[ϵ]: return list(self.ee.values())
+  def getEE(self) -> [ϵ]: return list(self.ee.values())
   def numEE(self) -> int: return len(self.getEE())
   def hasE(self, etag: Tag) -> bool: return etag in self.ee
 
@@ -222,7 +222,7 @@ def dff(g: Graph) -> Graph:
 
 ## §20.4 Topological sort p.573
 
-def tsort(g: Graph) -> List[Vert]:
+def tsort(g: Graph) -> [Vert]:
   g = dfs(g)
   return sorted(g.getVV(), key=lambda u: u.fin, reverse=True)
 
@@ -234,11 +234,11 @@ class Comp(Vert):
     self.vv: VSet = {}  # strongly connected vertices
   def init(self) -> None: self.__init__(self.tag)
 
-  def insVV(self, vv: List[Vert]) -> None:
+  def insVV(self, vv: [Vert]) -> None:
     for u in vv: self.vv[u.tag] = u
-  def getVV(self) -> List[Vert]: return list(self.vv.values())
+  def getVV(self) -> [Vert]: return list(self.vv.values())
 
-def makeCTag(vv: List[Vert]) -> Tag: return "+".join([v.tag for v in vv])
+def makeCTag(vv: [Vert]) -> Tag: return "+".join([v.tag for v in vv])
 
 def scc(g: Graph) -> Graph:
   g = dfs(g)
@@ -264,7 +264,7 @@ def sort(g: Graph, attr: Callable[[Vert], int], reverse: bool = False) -> Graph:
 
 def contract(g: Graph, f: Graph) -> Graph:
   # contract DFS g using DFF f
-  def scv(u: Vert) -> List[Vert]:
+  def scv(u: Vert) -> [Vert]:
     aa = f.adj(u)  # vertex u's adjacent vertices in DFF f
     return [] if not aa else [v := aa[0], *scv(v)]
 
@@ -276,7 +276,7 @@ def contract(g: Graph, f: Graph) -> Graph:
     x.insVV(vv)
     c.insV(x)  # insert component x into SCC c
   # create edges of SCC c
-  cc: List[Comp] = c.getVV()  # components of SCC c
+  cc: [Comp] = c.getVV()  # components of SCC c
   for x in cc:  # for each component x in SCC c
     aa: VSet = {}  # adjacent vertices of component x in DFS g
     vv = x.getVV()  # constituent vertices of component x
@@ -290,7 +290,7 @@ def contract(g: Graph, f: Graph) -> Graph:
 
 ## utilities
 
-def draw(g: Union[Graph, Tree], directed: bool, label: str = "", engine: str = "sfdp") -> V.Graph:
+def draw(g: Graph | Tree, directed: bool, label: str = "", engine: str = "sfdp") -> V.Graph:
   # returned gv must be evaluated in the top level scope for it to render in the notebook
   gv = V.Digraph(engine=engine) if directed else V.Graph(engine=engine)
   gv.attr(label=label if label != "" else g.tag)

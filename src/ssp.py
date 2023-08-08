@@ -8,7 +8,6 @@ Copyright sOnit, Inc. 2023
 
 from functools import reduce
 from queue import PriorityQueue
-from typing import List, Union
 
 from src.graph import Tree, Vert, makeETag, tsort
 from src.mst import MSTGraph, PrimMSTGraph, PriVert, WgtEdge
@@ -57,7 +56,7 @@ def sspBellmanFord(g: SSPGraph, s: Vert) -> Option[Tree]:
     if v.dis > u.dis + e.wgt: return None  # found negative-weight cycle reachable from vertex s
   return getSSP(g, s)  # extract SSP p from graph g
 
-def getSSP(g: SSPGraph, s: Union[Vert, PriVert]) -> Tree:
+def getSSP(g: SSPGraph, s: Vert | PriVert) -> Tree:
   p = Tree(f"{g.tag}¶")
   p.insV(s)
   for u in g.getVV():

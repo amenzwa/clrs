@@ -8,7 +8,7 @@ Copyright sOnit, Inc. 2023
 from unittest import TestCase
 
 from src.graph import Graph, bfs, bft, dff, dfs, draw, scc, tsort
-from src.util import Interval
+from src.util import Intv
 
 def dummy() -> None: pass
 
@@ -73,11 +73,11 @@ class DFSTestCase(TestCase):
     for e in self.g.getEE():
       u = e.u
       v = e.v
-      ui = Interval(u.dis, u.fin)
-      vi = Interval(v.dis, v.fin)
+      ui = Intv(u.dis, u.fin)
+      vi = Intv(v.dis, v.fin)
       assert ((ui.isDisjoint(vi) and not f.isDescendant(u, v) and not f.isDescendant(v, u)) or
               (ui.isInside(vi) and f.isDescendant(u, v) or
-               (vi.isInside(ui) and f.isDescendant(v, u))))
+              (vi.isInside(ui) and f.isDescendant(v, u))))
     print(self.g)
     draw(self.g, directed=True, label=f"{self.g.tag} with vertex discovery and finish times").render(f"viz-{self.g.tag}")
     print(f)
