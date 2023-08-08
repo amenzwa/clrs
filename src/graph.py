@@ -16,7 +16,7 @@ from src.util import Infinity, Option, Tag, Tagged, isNone
 
 ## vertex
 
-class VColor:
+class VCol:
   White = "White"
   Gray = "Gray"
   Black = "Black"
@@ -27,7 +27,7 @@ class Vert(Tagged):
     self.par: Option[Vert] = None
     self.dis = Infinity
     self.fin = -Infinity
-    self.col = VColor.White
+    self.col = VCol.White
   def init(self) -> None: self.__init__(self.tag)
 
   def __str__(self) -> str: return f"{self.tag} {self.showParent()} {self.showTimes()}"
@@ -42,7 +42,7 @@ VSet = {Tag, β}
 
 ## edge
 
-class EClass:
+class ECls:
   X = "X"  # don't care
   T = "T"  # tree edge
   B = "B"  # back edge
@@ -54,12 +54,12 @@ class Edge(Tagged):
     super().__init__(makeETag(u, v))
     self.u = u
     self.v = v
-    self.cls = EClass.X
+    self.cls = ECls.X
   def init(self) -> None: self.__init__(self.u, self.v)
 
   def __str__(self) -> str: return f"{self.tag} {self.showClassification()}"
   def show(self) -> str: return f"{self.showClassification()}"
-  def showClassification(self) -> str: return self.cls if self.cls != EClass.X else ""
+  def showClassification(self) -> str: return self.cls if self.cls != ECls.X else ""
 
   def isSelfLoop(self) -> bool: return self.u == self.v
 
@@ -138,7 +138,7 @@ def init(g: Graph) -> None:
   for u in g.getVV():
     u.par = None
     u.dis = Infinity
-    u.col = VColor.White
+    u.col = VCol.White
 
 ## §20.2 Breadth-first search p.554
 
@@ -147,14 +147,14 @@ def bfs(g: Graph, s: Vert) -> Graph:
     if q.empty(): return g
     u = q.get()
     for v in g.adj(u):
-      if v.col == VColor.White:
+      if v.col == VCol.White:
         # v discovered
         v.par = u
         v.dis = u.dis + 1
-        v.col = VColor.Gray
+        v.col = VCol.Gray
         q.put(v)
     # u finished
-    u.col = VColor.Black
+    u.col = VCol.Black
     return explore()
 
   # initialize
@@ -162,7 +162,7 @@ def bfs(g: Graph, s: Vert) -> Graph:
   # s discovered
   s.par = None
   s.dis = 0
-  s.col = VColor.Gray
+  s.col = VCol.Gray
   # search g
   q = Queue()
   q.put(s)
@@ -186,28 +186,28 @@ def dfs(g: Graph) -> Graph:
     time[0] += 1
     # u discovered
     u.dis = time[0]
-    u.col = VColor.Gray
+    u.col = VCol.Gray
     for v in g.adj(u):
       e = g.getE(makeETag(u, v))
-      if v.col == VColor.Black:
-        e.cls = EClass.F if u.dis < v.dis else EClass.C
-      elif v.col == VColor.Gray:
-        e.cls = EClass.B
-      elif v.col == VColor.White:
+      if v.col == VCol.Black:
+        e.cls = ECls.F if u.dis < v.dis else ECls.C
+      elif v.col == VCol.Gray:
+        e.cls = ECls.B
+      elif v.col == VCol.White:
         v.par = u
-        e.cls = EClass.T
+        e.cls = ECls.T
         explore(v)
     time[0] += 1
     # u finished
     u.fin = time[0]
-    u.col = VColor.Black
+    u.col = VCol.Black
 
   # initialize
   init(g)
   # search g
   time = [0]  # use array instead of a scalar to allow explore() to mutate time
   for u in g.getVV():
-    if u.col == VColor.White: explore(u)
+    if u.col == VCol.White: explore(u)
   return g
 
 def dff(g: Graph) -> Graph:
