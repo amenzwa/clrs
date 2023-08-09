@@ -58,7 +58,7 @@ And those of a programming persuasion should use [VSCode](https://code.visualstu
 Next, type in the following shell commands at the terminal in some folder, say `~/Documents/`, under which you wish to clone this project:
 
 ```bash
-$ ~/Documents
+$ cd ~/Documents
 $ git clone https://github.com/amenzwa/clrs.git
 ```
 
