@@ -8,7 +8,7 @@ The main purpose here is to show how to convert the English descriptions of algo
 
 Jupyter is chosen for its excellent [literate programming](https://en.wikipedia.org/wiki/Literate_programming) environment that produces documents containing both mathematical text and runnable code. Python is chosen because it is one of the most comprehensible programming languages. It is fairly succinct, has a reasonably small syntactic constructs, and possesses relatively few quirks. But more importantly, it is an imperative language. Most textbooks, including CLRS, present decidedly imperative algorithms.
 
-Just because an algorithm is recursive does not make it functional. The imperativeness shines through, whenever it mutates the data structures it accepts as input arguments. To my knowledge, there is but one textbook written from the functional perspective: [*Purely Functional Data Structures*](https://www.amazon.com/Purely-Functional-Data-Structures-Okasaki/dp/0521663504/ref=sr_1_1?keywords=purely+functional+data+structures&qid=1690905795&sprefix=purely+functional+%2Caps%2C81&sr=8-1), Okasaki 1999. I heartily recommend this textbook to anyone interested in [functional programming](https://en.wikipedia.org/wiki/Functional_programming)—in the academic sense of the phrase, not necessarily as it is practised in the IT industry.
+Just because an algorithm is recursive does not make it functional. The imperativeness shines through, whenever it mutates the data structures it accepts as input arguments. To my knowledge, there is but one textbook written from the functional perspective: [*Purely Functional Data Structures*](https://www.amazon.com/Purely-Functional-Data-Structures-Okasaki/dp/0521663504/ref=sr_1_1?keywords=purely+functional+data+structures&qid=1690905795&sprefix=purely+functional+%2Caps%2C81&sr=8-1), Okasaki 1999. I heartily recommend this textbook to anyone interested in functional programming—in the academic sense of the phrase, not necessarily as it is practised in the IT industry. I have published the [Elm reimplementations](https://github.com/amenzwa/pfd) of Okasaki's data structures.
 
 The primary audience of this project is the undergraduate Computer Science students taking algorithms, especially those using CLRS. The secondary audience is the IT practitioners interested in algorithm design, analysis, and implementation.
 
@@ -108,7 +108,7 @@ Next, reread the chapter, but this time, *dive* deeply. Fill out those terms and
 
 Upon your return to studying, review the material once more at a very high level, before moving on to other topics. This *climb* is similar to scan, but this time, you are skimming the cloud tops with a full knowledge of the material; you are no longer wandering and probing about in the dark.
 
-Study the cited chapters in CLRS in this manner, before you plough through these notebooks.
+Study in this manner the CLRS chapters cited here, before you plough through the notebooks.
 
 # CAUTION
 
