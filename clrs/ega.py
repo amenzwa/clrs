@@ -9,10 +9,10 @@ Copyright sOnit, Inc. 2023
 from typing import Callable, Generic, TypeVar
 from queue import Queue
 
-from clrs.graph import ECls, ESet, Edge, Graph, Tree, VCol, Vert, makeETag, parseETag
+from clrs.lstgraph import ECls, ESet, Edge, LstGraph, LstTree, VCol, Vert, makeETag, parseETag
 from clrs.util import DSet, Infinity, Tag
 
-def init(g: Graph) -> None:
+def egaInit(g: LstGraph) -> None:
   for u in g.getVV():
     u.par = None
     u.dis = Infinity
@@ -20,8 +20,8 @@ def init(g: Graph) -> None:
 
 ## §20.2 Breadth-first search p.554
 
-def bfs(g: Graph, s: Vert) -> Graph:
-  def explore() -> Graph:
+def bfs(g: LstGraph, s: Vert) -> LstGraph:
+  def explore() -> LstGraph:
     if q.empty(): return g
     u = q.get()
     for v in g.adj(u):
@@ -36,7 +36,7 @@ def bfs(g: Graph, s: Vert) -> Graph:
     return explore()
 
   # initialize
-  init(g)
+  egaInit(g)
   # s discovered
   s.par = None
   s.dis = 0
@@ -46,9 +46,9 @@ def bfs(g: Graph, s: Vert) -> Graph:
   q.put(s)
   return explore()
 
-def bft(g: Graph, s: Vert) -> Tree:
+def bft(g: LstGraph, s: Vert) -> LstTree:
   g = bfs(g, s)
-  t = Tree(f"{g.tag}†")
+  t = LstTree(f"{g.tag}†")
   for u in g.getVV():
     if u == s or not u.isRoot(): t.insV(u)
   for u in t.getVV():
@@ -59,7 +59,7 @@ def bft(g: Graph, s: Vert) -> Tree:
 
 ## §20.3 Depth-first search p.563
 
-def dfs(g: Graph) -> Graph:
+def dfs(g: LstGraph) -> LstGraph:
   def explore(u: Vert) -> None:
     time[0] += 1
     # u discovered
@@ -81,16 +81,16 @@ def dfs(g: Graph) -> Graph:
     u.col = VCol.Black
 
   # initialize
-  init(g)
+  egaInit(g)
   # search g
   time = [0]  # use array instead of a scalar to allow explore() to mutate time
   for u in g.getVV():
     if u.col == VCol.White: explore(u)
   return g
 
-def dff(g: Graph) -> Graph:
+def dff(g: LstGraph) -> LstGraph:
   g = dfs(g)
-  f = Graph(f"{g.tag}†")
+  f = LstGraph(f"{g.tag}†")
   f.dupVV(g.vv)
   for v in f.getVV():
     if not v.isRoot():
@@ -100,7 +100,7 @@ def dff(g: Graph) -> Graph:
 
 ## §20.4 Topological sort p.573
 
-def tsort(g: Graph) -> [Vert]:
+def tsort(g: LstGraph) -> [Vert]:
   g = dfs(g)
   return sorted(g.getVV(), key=lambda u: u.fin, reverse=True)
 
@@ -118,7 +118,7 @@ class Comp(Vert):
 
 def makeCTag(vv: [Vert]) -> Tag: return "+".join([v.tag for v in vv])
 
-def scc(g: Graph) -> Graph:
+def scc(g: LstGraph) -> LstGraph:
   g = dfs(g)
   r = transpose(g)
   s = sort(r, attr=lambda u: u.fin, reverse=True)  # descending sort of vertices by finish times
@@ -126,27 +126,27 @@ def scc(g: Graph) -> Graph:
   f = dff(s)
   return contract(g, f)
 
-def transpose(g: Graph) -> Graph:
+def transpose(g: LstGraph) -> LstGraph:
   # reverse edges
-  r = Graph(f"{g.tag}!")
+  r = LstGraph(f"{g.tag}!")
   r.dupVV(g.vv)
   for e in g.getEE(): r.insE(Edge(e.v, e.u))  # flip (u, v) to (v, u)
   return r
 
-def sort(g: Graph, attr: Callable[[Vert], int], reverse: bool = False) -> Graph:
+def sort(g: LstGraph, attr: Callable[[Vert], int], reverse: bool = False) -> LstGraph:
   # sort vertices
-  s = Graph(f"{g.tag}§")
+  s = LstGraph(f"{g.tag}§")
   for u in sorted(g.getVV(), key=attr, reverse=reverse): s.insV(u)  # sorted vertices
   s.dupEE(g.ee)
   return s
 
-def contract(g: Graph, f: Graph) -> Graph:
+def contract(g: LstGraph, f: LstGraph) -> LstGraph:
   # contract DFS g using DFF f
   def scv(u: Vert) -> [Vert]:
     aa = f.adj(u)  # vertex u's adjacent vertices in DFF f
     return [] if not aa else [v := aa[0], *scv(v)]
 
-  c = Graph(f"{g.tag}₵")  # SCC c
+  c = LstGraph(f"{g.tag}₵")  # SCC c
   # create vertices of SCC c
   for r in [v for v in g.getVV() if v.isRoot()]:  # for each root vertex r in DFS g
     vv = [r, *scv(r)]  # strongly connected vertices rooted at vertex r

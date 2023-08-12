@@ -74,21 +74,12 @@ ESet = {Tag, ϵ}
 class VE(Tagged, Generic[β, ϵ]):
   def __init__(self, tag: Tag):
     super().__init__(tag)
-    self.vv: VSet = {}
-    self.ee: ESet = {}
-    for u in self.getVV(): u.init()
-    for e in self.getEE(): e.init()
 
   def makeVE(self, vt: [Tag], et: [Tag]) -> None:
     self.makeV(vt)
     self.makeE(et)
-  def makeV(self, vt: [Tag]) -> None:
-    for vtag in vt: self.vv[vtag] = Vert(vtag)
-  def makeE(self, et: [Tag]) -> None:
-    for etag in et:
-      [utag, vtag] = parseETag(etag)
-      e = Edge(self.getV(utag), self.getV(vtag))
-      self.ee[e.tag] = e
+  def makeV(self, vt: [Tag]) -> None: raise Exception("todo")
+  def makeE(self, et: [Tag]) -> None: raise Exception("todo")
 
   def __str__(self) -> str: return self.tag + "\n" + self.showVertices() + "\n" + self.showEdges()
   def showVertices(self) -> str:
@@ -98,13 +89,13 @@ class VE(Tagged, Generic[β, ϵ]):
 
   # vertex
 
-  def insV(self, v: β) -> None: self.vv[v.tag] = v
-  def delV(self, v: β) -> None: self.vv.pop(v.tag)
-  def dupVV(self, vv: VSet) -> None: self.vv = {**vv}
-  def getV(self, vtag: Tag) -> β: return self.vv[vtag]
-  def getVV(self) -> [β]: return list(self.vv.values())
-  def numVV(self) -> int: return len(self.getVV())
-  def adj(self, u: β) -> [β]: return [self.getV(e.v.tag) for e in self.getEE() if e.u.tag == u.tag]
+  def insV(self, v: β) -> None: raise Exception("todo")
+  def delV(self, v: β) -> None: raise Exception("todo")
+  def dupVV(self, vv: VSet) -> None: raise Exception("todo")
+  def getV(self, vtag: Tag) -> β: raise Exception("todo")
+  def getVV(self) -> [β]: raise Exception("todo")
+  def numVV(self) -> int: raise Exception("todo")
+  def adj(self, u: β) -> [β]: raise Exception("todo")
   def path(self, s: β, v: β) -> [β]:
     # see p.562
     if v.isRoot(): return []
@@ -117,6 +108,46 @@ class VE(Tagged, Generic[β, ϵ]):
       return True if v in aa else reduce(lambda acc, b: acc or reachable(b), aa, False)  # path a ~> v
     return True if u == v else reachable(u)  # self-loop or path
   def isDescendant(self, v: β, u: β) -> bool: return self.isAncestor(u, v)
+  def hasV(self, vtag: Tag) -> bool: raise Exception("todo")
+
+  # edge
+
+  def insE(self, e: ϵ) -> None: raise Exception("todo")
+  def delE(self, e: ϵ) -> None: raise Exception("todo")
+  def dupEE(self, ee: ESet) -> None: raise Exception("todo")
+  def getE(self, etag: Tag) -> ϵ: raise Exception("todo")
+  def getEE(self) -> [ϵ]: raise Exception("todo")
+  def numEE(self) -> int: raise Exception("todo")
+  def hasE(self, etag: Tag) -> bool: raise Exception("todo")
+
+class LstVE(VE):
+  def __init__(self, tag: Tag):
+    super().__init__(tag)
+    self.vv: VSet = {}
+    self.ee: ESet = {}
+    for u in self.getVV(): u.egaInit()
+    for e in self.getEE(): e.egaInit()
+
+  def makeVE(self, vt: [Tag], et: [Tag]) -> None:
+    self.makeV(vt)
+    self.makeE(et)
+  def makeV(self, vt: [Tag]) -> None:
+    for vtag in vt: self.vv[vtag] = Vert(vtag)
+  def makeE(self, et: [Tag]) -> None:
+    for etag in et:
+      [utag, vtag] = parseETag(etag)
+      e = Edge(self.getV(utag), self.getV(vtag))
+      self.ee[e.tag] = e
+
+  # vertex
+
+  def insV(self, v: β) -> None: self.vv[v.tag] = v
+  def delV(self, v: β) -> None: self.vv.pop(v.tag)
+  def dupVV(self, vv: VSet) -> None: self.vv = {**vv}
+  def getV(self, vtag: Tag) -> β: return self.vv[vtag]
+  def getVV(self) -> [β]: return list(self.vv.values())
+  def numVV(self) -> int: return len(self.getVV())
+  def adj(self, u: β) -> [β]: return [self.getV(e.v.tag) for e in self.getEE() if e.u.tag == u.tag]
   def hasV(self, vtag: Tag) -> bool: return vtag in self.vv
 
   # edge
@@ -129,13 +160,17 @@ class VE(Tagged, Generic[β, ϵ]):
   def numEE(self) -> int: return len(self.getEE())
   def hasE(self, etag: Tag) -> bool: return etag in self.ee
 
-class Graph(VE): pass
+class MtxVE(VE): pass
 
-class Tree(VE): pass
+class LstGraph(LstVE): pass
+class MtxGraph(MtxVE): pass
+
+class LstTree(LstVE): pass
+class MtxTree(MtxVE): pass
 
 ## utilities
 
-def draw(g: Graph | Tree, directed: bool, label: str = "", engine: str = "sfdp") -> V.Graph:
+def draw(g: LstGraph | MtxGraph | LstTree, directed: bool, label: str = "", engine: str = "sfdp") -> V.Graph:
   # returned gv must be evaluated in the top level scope for it to render in the notebook
   gv = V.Digraph(engine=engine) if directed else V.Graph(engine=engine)
   gv.attr(label=label if label != "" else g.tag)

@@ -20,7 +20,7 @@ This is an ongoing project. The first "commit" consists of graph representation,
 
 - [`util.ipynb`](./util.ipynb)—utility types and functions
   - [`graph.ipynb`](./graph.ipynb)—graph representation, BFS, and DFS from Chapter 20
-    - [`graphtest.ipynb`](./graphtest.ipynb)—tests of BFS and DFS algorithms with visualisations
+    - [`graphtest.ipynb`](./egatest.ipynb)—tests of BFS and DFS algorithms with visualisations
     - [`mst.ipynb`](./mst.ipynb)—Kruskal's and Prim's MST algorithms from Chapter 21
       - [`msttest.ipynb`](./msttest.ipynb)—tests of MST algorithms with visualisations
       - [`ssp.ipynb`](./ssp.ipynb)—Bellman-Ford and Dijkstra's SSP algorithms from Chapter 22

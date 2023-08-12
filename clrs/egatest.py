@@ -7,7 +7,7 @@ Copyright sOnit, Inc. 2023
 
 from unittest import TestCase
 
-from clrs.graph import Graph, draw
+from clrs.lstgraph import LstGraph, draw
 from clrs.ega import bfs, bft, dff, dfs, scc, tsort
 from clrs.util import Intv
 
@@ -28,10 +28,10 @@ class BFSTestCase(TestCase):
     "x-w", "x-y", "x-z",
     "y-u", "y-v", "y-x",
     "z-w", "z-x", ]
-  g = Graph("dummy")
+  g = LstGraph("dummy")
 
   def setUp(self) -> None:
-    self.g = Graph("BFS")
+    self.g = LstGraph("BFS")
     self.g.makeVE(self.vt, self.et)
 
   def tearDown(self) -> None:
@@ -59,10 +59,10 @@ class DFSTestCase(TestCase):
     "x-v",
     "y-x",
     "z-z", ]
-  g = Graph("dummy")
+  g = LstGraph("dummy")
 
   def setUp(self) -> None:
-    self.g = Graph("DFS")
+    self.g = LstGraph("DFS")
     self.g.makeVE(self.vt, self.et)
 
   def tearDown(self) -> None:
@@ -96,10 +96,10 @@ class TSortTestCase(TestCase):
     "socks-shoes",
     "tie-jacket",
     "undershorts-pants", "undershorts-shoes", ]
-  g = Graph("dummy")
+  g = LstGraph("dummy")
 
   def setUp(self) -> None:
-    self.g = Graph("TSort")
+    self.g = LstGraph("TSort")
     self.g.makeVE(self.vt, self.et)
 
   def tearDown(self) -> None:
@@ -124,10 +124,10 @@ class SCCTestCase(TestCase):
     "f-g",
     "g-f", "g-h",
     "h-h", ]
-  g = Graph("dummy")
+  g = LstGraph("dummy")
 
   def setUp(self) -> None:
-    self.g = Graph("SCC")
+    self.g = LstGraph("SCC")
     self.g.makeVE(self.vt, self.et)
 
   def tearDown(self) -> None:

@@ -8,7 +8,7 @@ Copyright sOnit, Inc. 2023
 
 from queue import PriorityQueue
 
-from clrs.graph import ESet, Edge, Graph, Tree, Vert, makeETag, parseETag
+from clrs.lstgraph import ESet, Edge, LstGraph, LstTree, Vert, makeETag, parseETag
 from clrs.util import DSet, Infinity, Tag
 
 ## weighted edge
@@ -24,7 +24,7 @@ class WgtEdge(Edge):
 
 ## MST connected, undirected graph with weighted edges
 
-class MSTGraph(Graph):
+class MSTLstGraph(LstGraph):
   def __init__(self, tag: Tag):
     super().__init__(tag)
 
@@ -39,7 +39,7 @@ class MSTGraph(Graph):
 
 ## Kruskal's MST algorithm p.592
 
-def mstKruskal(g: MSTGraph) -> Tree:
+def mstKruskal(g: MSTLstGraph) -> LstTree:
   # initialize
   a: ESet = {}  # edge set of MST
   ds = DSet(attr=lambda e: e.wgt)  # forests disjoint set
@@ -50,7 +50,7 @@ def mstKruskal(g: MSTGraph) -> Tree:
       a[e.tag] = e
       ds.union(e.u, e.v)
   # extract MST t from graph g using tree edge set a
-  t = Tree(f"{g.tag}†")
+  t = LstTree(f"{g.tag}†")
   for e in a.values():
     t.insE(e)
     t.insV(e.u)
@@ -71,7 +71,7 @@ class PriVert(Vert):
 
 ## Prim MST graph with prioritized vertices
 
-class PrimMSTGraph(MSTGraph):
+class PrimMSTGraph(MSTLstGraph):
   def __init__(self, tag: Tag):
     super().__init__(tag)
 
@@ -80,7 +80,7 @@ class PrimMSTGraph(MSTGraph):
 
 ## Prim's MST algorithm p.594
 
-def mstPrim(g: MSTGraph, r: PriVert) -> Tree:
+def mstPrim(g: MSTLstGraph, r: PriVert) -> LstTree:
   # initialize
   for u in g.getVV():
     u.par = None
@@ -98,7 +98,7 @@ def mstPrim(g: MSTGraph, r: PriVert) -> Tree:
         v.pri = e.wgt
         q.queue.sort()  # rearrange q to account for decreased v.pri
   # extract MST t from graph g using tree vertices vv
-  t = Tree(f"{g.tag}†")
+  t = LstTree(f"{g.tag}†")
   for v in g.getVV():
     t.insV(v)
     if not v.isRoot(): t.insE(g.getE(makeETag(v, v.par)))  # see p.596
