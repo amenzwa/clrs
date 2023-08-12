@@ -7,8 +7,8 @@ Copyright sOnit, Inc. 2023
 
 from unittest import TestCase
 
-from src.graph import draw
-from src.mst import MSTGraph, PrimMSTGraph, mstKruskal, mstPrim
+from clrs.graph import draw
+from clrs.mst import MSTGraph, PrimMSTGraph, mstKruskal, mstPrim
 
 ## Kruskal's and Prim's MST algorithms
 

@@ -1,5 +1,5 @@
 """
-This module contains tests for the algorithms implemented in the graph module.
+This module contains tests for the algorithms implemented in the ega module.
 
 Author: Amen Zwa, Esq.
 Copyright sOnit, Inc. 2023
@@ -7,8 +7,9 @@ Copyright sOnit, Inc. 2023
 
 from unittest import TestCase
 
-from src.graph import Graph, bfs, bft, dff, dfs, draw, scc, tsort
-from src.util import Intv
+from clrs.graph import Graph, draw
+from clrs.ega import bfs, bft, dff, dfs, scc, tsort
+from clrs.util import Intv
 
 def dummy() -> None: pass
 

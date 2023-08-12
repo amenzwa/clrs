@@ -7,9 +7,9 @@ Copyright sOnit, Inc. 2023
 
 from unittest import TestCase
 
-from src.graph import draw
-from src.ssp import DijkstraSSPGraph, SSPGraph, sspBellmanFord, sspBellmanFordDAWG, sspDijkstra
-from src.util import isSome
+from clrs.graph import draw
+from clrs.ssp import DijkstraSSPGraph, SSPGraph, sspBellmanFord, sspBellmanFordDAWG, sspDijkstra
+from clrs.util import isSome
 
 ## Bellman-Ford SSP algorithm
 

@@ -9,10 +9,11 @@ Copyright sOnit, Inc. 2023
 from functools import reduce
 from queue import PriorityQueue
 
-from src.graph import Tree, Vert, makeETag, tsort
-from src.mst import MSTGraph, PrimMSTGraph, PriVert, WgtEdge
+from clrs.graph import Tree, Vert, makeETag
+from clrs.ega import tsort
+from clrs.mst import MSTGraph, PrimMSTGraph, PriVert, WgtEdge
 
-from src.util import Infinity, Option
+from clrs.util import Infinity, Option
 
 ## SSP directed, weighted graph
 
