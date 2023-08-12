@@ -19,8 +19,9 @@ This is an ongoing project. The first "commit" consists of graph representation,
 ## *IPython*
 
 - [`util.ipynb`](./util.ipynb)—utility types and functions
-  - [`graph.ipynb`](./graph.ipynb)—graph representation, BFS, and DFS from Chapter 20
-    - [`graphtest.ipynb`](./egatest.ipynb)—tests of BFS and DFS algorithms with visualisations
+  - [`graph.ipynb`](./graph.ipynb)—graph representations from Chapter 20
+    - [`ega.ipynb`](./ega.ipynb)—BFS and DFS algorithms from Chapter 20
+      - [`egatest.ipynb`](./egatest.ipynb)—tests of BFS and DFS algorithms with visualisations
     - [`mst.ipynb`](./mst.ipynb)—Kruskal's and Prim's MST algorithms from Chapter 21
       - [`msttest.ipynb`](./msttest.ipynb)—tests of MST algorithms with visualisations
       - [`ssp.ipynb`](./ssp.ipynb)—Bellman-Ford and Dijkstra's SSP algorithms from Chapter 22
@@ -30,13 +31,14 @@ The `graph.ipynb` Jupyter notebook is where to start reading about graph algorit
 
 ## *Python*
 
-- `src/util.py`—utility types and functions
-  - `src/graph.py`—graph representation, BFS, and DFS from Chapter 20
-    - `src/graphtest.py`—tests of BFS and DFS algorithms with visualisations (`viz-*` output files)
-    - `src/mst.py`—Kruskal's and Prim's MST algorithms from Chapter 21
-      - `src/msttest.py`—tests of MST algorithms with visualisations
-      - `src/ssp.py`—Bellman-Ford and Dijkstra's SSP algorithms from Chapter 22
-        - `src/ssptest.py`—tests of SSP algorithms with visualisations
+- `clrs/util.py`—utility types and functions
+  - `clrs/graph.py`—graph representation from Chapter 20
+    - `clrs/ega.py`—BFS and DFS algorithms from Chapter 20
+      - `clrs/egatest.py`—tests of BFS and DFS algorithms with visualisations (`viz-*` output files)
+    - `clrs/mst.py`—Kruskal's and Prim's MST algorithms from Chapter 21
+      - `clrs/msttest.py`—tests of MST algorithms with visualisations
+      - `clrs/ssp.py`—Bellman-Ford and Dijkstra's SSP algorithms from Chapter 22
+        - `clrs/ssptest.py`—tests of SSP algorithms with visualisations
 
 The `test.py` in the project top-level directory contains the Python tests for the entire project. See below for the instructions on how to run theses tests from a terminal.
 
