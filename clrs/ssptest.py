@@ -7,7 +7,7 @@ Copyright sOnit, Inc. 2023
 
 from unittest import TestCase
 
-from clrs.lstgraph import draw
+from clrs.graph import draw
 from clrs.ssp import DijkstraSSPGraph, SSPGraph, sspBellmanFord, sspBellmanFordDAWG, sspDijkstra
 from clrs.util import isSome
 

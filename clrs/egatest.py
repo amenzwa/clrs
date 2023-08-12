@@ -7,7 +7,7 @@ Copyright sOnit, Inc. 2023
 
 from unittest import TestCase
 
-from clrs.lstgraph import LstGraph, draw
+from clrs.graph import LstGraph, draw
 from clrs.ega import bfs, bft, dff, dfs, scc, tsort
 from clrs.util import Intv
 

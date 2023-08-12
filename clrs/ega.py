@@ -9,7 +9,7 @@ Copyright sOnit, Inc. 2023
 from typing import Callable, Generic, TypeVar
 from queue import Queue
 
-from clrs.lstgraph import ECls, ESet, Edge, LstGraph, LstTree, VCol, Vert, makeETag, parseETag
+from clrs.graph import ECls, ESet, Edge, LstGraph, LstTree, VCol, Vert, makeETag, parseETag
 from clrs.util import DSet, Infinity, Tag
 
 def egaInit(g: LstGraph) -> None:

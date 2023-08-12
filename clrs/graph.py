@@ -71,7 +71,7 @@ ESet = {Tag, ϵ}
 
 ## graph and tree
 
-class VE(Tagged, Generic[β, ϵ]):
+class VE(Tagged, Generic[β, ϵ]):  # base for graph and tree types
   def __init__(self, tag: Tag):
     super().__init__(tag)
 
@@ -120,7 +120,7 @@ class VE(Tagged, Generic[β, ϵ]):
   def numEE(self) -> int: raise Exception("todo")
   def hasE(self, etag: Tag) -> bool: raise Exception("todo")
 
-class LstVE(VE):
+class LstVE(VE):  # adjacency list representation of graphs and trees
   def __init__(self, tag: Tag):
     super().__init__(tag)
     self.vv: VSet = {}
@@ -160,12 +160,16 @@ class LstVE(VE):
   def numEE(self) -> int: return len(self.getEE())
   def hasE(self, etag: Tag) -> bool: return etag in self.ee
 
-class MtxVE(VE): pass
+class MtxVE(VE):  # adjacency matrix representation of graphs and trees
+  # TODO
+  pass
 
 class LstGraph(LstVE): pass
+
 class MtxGraph(MtxVE): pass
 
 class LstTree(LstVE): pass
+
 class MtxTree(MtxVE): pass
 
 ## utilities

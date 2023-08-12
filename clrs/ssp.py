@@ -9,7 +9,7 @@ Copyright sOnit, Inc. 2023
 from functools import reduce
 from queue import PriorityQueue
 
-from clrs.lstgraph import LstTree, Vert, makeETag
+from clrs.graph import LstTree, Vert, makeETag
 from clrs.ega import tsort
 from clrs.mst import MSTLstGraph, PrimMSTGraph, PriVert, WgtEdge
 

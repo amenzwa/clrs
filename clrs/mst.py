@@ -8,7 +8,7 @@ Copyright sOnit, Inc. 2023
 
 from queue import PriorityQueue
 
-from clrs.lstgraph import ESet, Edge, LstGraph, LstTree, Vert, makeETag, parseETag
+from clrs.graph import ESet, Edge, LstGraph, LstTree, Vert, makeETag, parseETag
 from clrs.util import DSet, Infinity, Tag
 
 ## weighted edge
