@@ -11,13 +11,13 @@ from queue import PriorityQueue
 
 from clrs.graph import LstTree, Vert, makeETag
 from clrs.ega import tsort
-from clrs.mst import MSTLstGraph, PrimMSTGraph, PriVert, WgtEdge
+from clrs.mst import MSTGraph, PrimMSTGraph, PriVert, WgtEdge
 
 from clrs.util import Infinity, Option
 
 ## SSP directed, weighted graph
 
-SSPGraph = MSTLstGraph  # uses WgtEdge
+SSPGraph = MSTGraph  # uses WgtEdge
 
 def sspInit(g: SSPGraph, s: Vert) -> None:
   # see p.609

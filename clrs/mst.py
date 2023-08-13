@@ -24,7 +24,7 @@ class WgtEdge(Edge):
 
 ## MST connected, undirected graph with weighted edges
 
-class MSTLstGraph(LstGraph):
+class MSTGraph(LstGraph):
   def __init__(self, tag: Tag):
     super().__init__(tag)
 
@@ -39,7 +39,7 @@ class MSTLstGraph(LstGraph):
 
 ## Kruskal's MST algorithm p.592
 
-def mstKruskal(g: MSTLstGraph) -> LstTree:
+def mstKruskal(g: MSTGraph) -> LstTree:
   # initialize
   a: ESet = {}  # edge set of MST
   ds = DSet(attr=lambda e: e.wgt)  # forests disjoint set
@@ -71,7 +71,7 @@ class PriVert(Vert):
 
 ## Prim MST graph with prioritized vertices
 
-class PrimMSTGraph(MSTLstGraph):
+class PrimMSTGraph(MSTGraph):
   def __init__(self, tag: Tag):
     super().__init__(tag)
 
@@ -80,7 +80,7 @@ class PrimMSTGraph(MSTLstGraph):
 
 ## Prim's MST algorithm p.594
 
-def mstPrim(g: MSTLstGraph, r: PriVert) -> LstTree:
+def mstPrim(g: MSTGraph, r: PriVert) -> LstTree:
   # initialize
   for u in g.getVV():
     u.par = None

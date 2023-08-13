@@ -8,7 +8,7 @@ Copyright sOnit, Inc. 2023
 from unittest import TestCase
 
 from clrs.graph import draw
-from clrs.mst import MSTLstGraph, PrimMSTGraph, mstKruskal, mstPrim
+from clrs.mst import MSTGraph, PrimMSTGraph, mstKruskal, mstPrim
 
 ## Kruskal's and Prim's MST algorithms
 
@@ -35,14 +35,14 @@ class MSTTestCase(TestCase):
     "g-f": 2, "g-h": 1, "g-i": 6,
     "h-a": 8, "h-b": 11, "h-g": 1, "h-i": 7,
     "i-c": 2, "i-g": 6, "i-h": 7, }
-  g = MSTLstGraph("dummy")
+  g = MSTGraph("dummy")
 
   def setUp(self) -> None: pass
 
   def tearDown(self) -> None: pass
 
   def testKruskal(self) -> None:
-    self.g = MSTLstGraph("MST")
+    self.g = MSTGraph("MST")
     self.g.makeVEw(self.vt, self.et, self.ew)
     print(self.g)
     draw(self.g, directed=False, label=f"{self.g.tag} connected, undirected graph").render(f"viz-{self.g.tag}")

@@ -36,9 +36,6 @@ class Vert(Tagged):
 
   def isRoot(self) -> bool: return isNone(self.par)
 
-β = TypeVar("β")
-VSet = {Tag, β}
-
 ## edge
 
 class ECls:
@@ -66,10 +63,14 @@ def makeETag(u: Vert, v: Vert) -> Tag: return f"{u.tag}-{v.tag}"
 
 def parseETag(etag: Tag) -> [Tag, Tag]: return etag.split("-")
 
-ϵ = TypeVar("ϵ")
-ESet = {Tag, ϵ}
-
 ## graph and tree
+
+β = TypeVar("β")
+VSet = {Tag, β}  # vertex set
+VMtx = [[β]]  # adjacency matrix
+
+ϵ = TypeVar("ϵ")
+ESet = {Tag, ϵ}  # edge set
 
 class VE(Tagged, Generic[β, ϵ]):  # base for graph and tree types
   def __init__(self, tag: Tag):
@@ -128,9 +129,6 @@ class LstVE(VE):  # adjacency list representation of graphs and trees
     for u in self.getVV(): u.egaInit()
     for e in self.getEE(): e.egaInit()
 
-  def makeVE(self, vt: [Tag], et: [Tag]) -> None:
-    self.makeV(vt)
-    self.makeE(et)
   def makeV(self, vt: [Tag]) -> None:
     for vtag in vt: self.vv[vtag] = Vert(vtag)
   def makeE(self, et: [Tag]) -> None:
@@ -161,8 +159,15 @@ class LstVE(VE):  # adjacency list representation of graphs and trees
   def hasE(self, etag: Tag) -> bool: return etag in self.ee
 
 class MtxVE(VE):  # adjacency matrix representation of graphs and trees
-  # TODO
-  pass
+  def __init__(self, tag: Tag):
+    super().__init__(tag)
+    self.ww: VMtx = []
+
+  def makeV(self, vt: [Tag]) -> None:
+    # see Equation 23.1 p.647
+    n = len(vt)  # number of vertices
+    self.ww = [n * [Infinity] for i in n]
+    for i in n: self.ww[i][i] = 0
 
 class LstGraph(LstVE): pass
 
