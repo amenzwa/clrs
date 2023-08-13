@@ -63,11 +63,14 @@ def makeETag(u: Vert, v: Vert) -> Tag: return f"{u.tag}-{v.tag}"
 
 def parseETag(etag: Tag) -> [Tag, Tag]: return etag.split("-")
 
+def indicesOfETag(etag: Tag) -> [int, int]:
+  [utag, vtag] = parseETag(etag)
+  return [int(utag) - 1, int(vtag) - 1]  # vtag starts at 1
+
 ## graph and tree
 
 β = TypeVar("β")
 VSet = {Tag, β}  # vertex set
-VMtx = [[β]]  # adjacency matrix
 
 ϵ = TypeVar("ϵ")
 ESet = {Tag, ϵ}  # edge set
@@ -126,8 +129,6 @@ class LstVE(VE):  # adjacency list representation of graphs and trees
     super().__init__(tag)
     self.vv: VSet = {}
     self.ee: ESet = {}
-    for u in self.getVV(): u.egaInit()
-    for e in self.getEE(): e.egaInit()
 
   def makeV(self, vt: [Tag]) -> None:
     for vtag in vt: self.vv[vtag] = Vert(vtag)
@@ -136,8 +137,6 @@ class LstVE(VE):  # adjacency list representation of graphs and trees
       [utag, vtag] = parseETag(etag)
       e = Edge(self.getV(utag), self.getV(vtag))
       self.ee[e.tag] = e
-
-  # vertex
 
   def insV(self, v: β) -> None: self.vv[v.tag] = v
   def delV(self, v: β) -> None: self.vv.pop(v.tag)
@@ -148,8 +147,6 @@ class LstVE(VE):  # adjacency list representation of graphs and trees
   def adj(self, u: β) -> [β]: return [self.getV(e.v.tag) for e in self.getEE() if e.u.tag == u.tag]
   def hasV(self, vtag: Tag) -> bool: return vtag in self.vv
 
-  # edge
-
   def insE(self, e: ϵ) -> None: self.ee[e.tag] = e
   def delE(self, e: ϵ) -> None: self.ee.pop(e.tag)
   def dupEE(self, ee: ESet) -> None: self.ee = {**ee}
@@ -158,16 +155,31 @@ class LstVE(VE):  # adjacency list representation of graphs and trees
   def numEE(self) -> int: return len(self.getEE())
   def hasE(self, etag: Tag) -> bool: return etag in self.ee
 
+WMtx = [[float]]  # adjacency matrix of edge weights
+
 class MtxVE(VE):  # adjacency matrix representation of graphs and trees
   def __init__(self, tag: Tag):
     super().__init__(tag)
-    self.ww: VMtx = []
+    self.vv: VSet = {}
+    self.ee: ESet = {}
+    self.ww: WMtx = []
 
   def makeV(self, vt: [Tag]) -> None:
+    for vtag in vt: self.vv[vtag] = Vert(vtag)
+    n = len(vt)
+    r = range(0, n)
     # see Equation 23.1 p.647
-    n = len(vt)  # number of vertices
-    self.ww = [n * [Infinity] for i in n]
-    for i in n: self.ww[i][i] = 0
+    self.ww = [[Infinity] * n for i in r]
+    for i in r: self.ww[i][i] = 0
+
+  def getV(self, vtag: Tag) -> β: return self.vv[vtag]
+  def getVV(self) -> [β]: return list(self.vv.values())
+  def numVV(self) -> int: return len(self.getVV())
+  def adj(self, u: β) -> [β]: return [self.getV(e.v.tag) for e in self.getEE() if e.u.tag == u.tag]
+
+  def getE(self, etag: Tag) -> ϵ: return self.ee[etag]
+  def getEE(self) -> [ϵ]: return list(self.ee.values())
+  def numEE(self) -> int: return len(self.getEE())
 
 class LstGraph(LstVE): pass
 
