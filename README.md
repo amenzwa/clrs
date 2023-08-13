@@ -26,8 +26,8 @@ This is an ongoing project. The first "commit" consists of graph representation,
       - [`msttest.ipynb`](./msttest.ipynb)—tests of MST algorithms with visualisations
       - [`ssp.ipynb`](./ssp.ipynb)—Bellman-Ford and Dijkstra's SSP algorithms from Chapter 22
         - [`ssptest.ipynb`](./ssptest.ipynb)—tests of SSP algorithms with visualisations
-      - [asp.ipynb](./asp.ipynb)—Floyd-Warshall, transitive closure, and Johnson's ASP algorithms from Chapter 23
-        - [asptest.ipynb](./asptest.ipynb)—tests of ASP algorithms with visualisations
+      - [`asp.ipynb`](./asp.ipynb)—Floyd-Warshall, transitive closure, and Johnson's ASP algorithms from Chapter 23
+        - [`asptest.ipynb`](./asptest.ipynb)—tests of ASP algorithms with visualisations
 
 The `graph.ipynb` Jupyter notebook is where to start reading about graph algorithms.
 
