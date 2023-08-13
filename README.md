@@ -16,6 +16,8 @@ This is an ongoing project. The first "commit" consists of graph representation,
 
 # CONTENTS
 
+Below, I listed the IPython notebooks and the pure Python source files as a dependency tree. The files indented further to the right depend the one above with shallower indentation.
+
 ## *IPython*
 
 - [`util.ipynb`](./util.ipynb)—utility types and functions
