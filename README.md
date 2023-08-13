@@ -25,7 +25,9 @@ This is an ongoing project. The first "commit" consists of graph representation,
     - [`mst.ipynb`](./mst.ipynb)—Kruskal's and Prim's MST algorithms from Chapter 21
       - [`msttest.ipynb`](./msttest.ipynb)—tests of MST algorithms with visualisations
       - [`ssp.ipynb`](./ssp.ipynb)—Bellman-Ford and Dijkstra's SSP algorithms from Chapter 22
-        - [`ssptest.ipynb`](ssptest.ipynb)—tests of SSP algorithms with visualisations
+        - [`ssptest.ipynb`](./ssptest.ipynb)—tests of SSP algorithms with visualisations
+      - [asp.ipynb](./asp.ipynb)—Floyd-Warshall, transitive closure, and Johnson's ASP algorithms from Chapter 23
+        - [asptest.ipynb](./asptest.ipynb)—tests of ASP algorithms with visualisations
 
 The `graph.ipynb` Jupyter notebook is where to start reading about graph algorithms.
 
@@ -39,6 +41,8 @@ The `graph.ipynb` Jupyter notebook is where to start reading about graph algorit
       - `clrs/msttest.py`—tests of MST algorithms with visualisations
       - `clrs/ssp.py`—Bellman-Ford and Dijkstra's SSP algorithms from Chapter 22
         - `clrs/ssptest.py`—tests of SSP algorithms with visualisations
+      - `clrs/asp.py`—Floyd-Warshall, transitive closure, and Johnson's ASP algorithms from Chapter 23
+        - `clrs/asptest.py`—tests of ASP algorithms with visualisations
 
 The `test.py` in the project top-level directory contains the Python tests for the entire project. See below for the instructions on how to run theses tests from a terminal.
 
@@ -64,7 +68,7 @@ $ cd ~/Documents
 $ git clone https://github.com/amenzwa/clrs.git
 ```
 
-Then, we install the required Python packages into JLD's virtual environment using as follows:
+Then, we install the required Python packages into JLD's virtual environment in `~/Library/jupyterlab-desktop` as follows:
 
 ```bash
 $ brew install graphviz # required by Python graphviz graph visualisation library
