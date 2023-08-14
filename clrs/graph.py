@@ -100,18 +100,6 @@ class VE(Tagged, Generic[β, ϵ]):  # base for graph and tree types
   def getVV(self) -> [β]: raise Exception("todo")
   def numVV(self) -> int: raise Exception("todo")
   def adj(self, u: β) -> [β]: raise Exception("todo")
-  def path(self, s: β, v: β) -> [β]:
-    # see p.562
-    if v.isRoot(): return []
-    return [s] if v == s else [v, *self.path(s, v.par)]
-  def isAncestor(self, u: β, v: β) -> bool:
-    # check if vertex u is the ancestor of vertex v (there exists a path from u ~> v)
-    def reachable(a: β) -> bool:
-      # check if a can reach v
-      aa = self.adj(a)  # edge a -> v
-      return True if v in aa else reduce(lambda acc, b: acc or reachable(b), aa, False)  # path a ~> v
-    return True if u == v else reachable(u)  # self-loop or path
-  def isDescendant(self, v: β, u: β) -> bool: return self.isAncestor(u, v)
   def hasV(self, vtag: Tag) -> bool: raise Exception("todo")
 
   # edge
@@ -138,6 +126,19 @@ class LstVE(VE):  # adjacency list representation of graphs and trees
       e = Edge(self.getV(utag), self.getV(vtag))
       self.ee[e.tag] = e
 
+  def pathS(self, s: β, v: β) -> [β]:
+    # see p.562
+    if v.isRoot(): return []
+    return [s] if v == s else [v, *self.pathS(s, v.par)]
+  def isAncestor(self, u: β, v: β) -> bool:
+    # check if vertex u is the ancestor of vertex v (there exists a path from u ~> v)
+    def reachable(a: β) -> bool:
+      # check if a can reach v
+      aa = self.adj(a)  # edge a -> v
+      return True if v in aa else reduce(lambda acc, b: acc or reachable(b), aa, False)  # path a ~> v
+    return True if u == v else reachable(u)  # self-loop or path
+  def isDescendant(self, v: β, u: β) -> bool: return self.isAncestor(u, v)
+
   def insV(self, v: β) -> None: self.vv[v.tag] = v
   def delV(self, v: β) -> None: self.vv.pop(v.tag)
   def dupVV(self, vv: VSet) -> None: self.vv = {**vv}
@@ -157,29 +158,26 @@ class LstVE(VE):  # adjacency list representation of graphs and trees
 
 WMtx = [[float]]  # adjacency matrix of edge weights
 
-class MtxVE(VE):  # adjacency matrix representation of graphs and trees
+class MtxVE(LstVE):  # adjacency matrix representation of graphs and trees
   def __init__(self, tag: Tag):
     super().__init__(tag)
-    self.vv: VSet = {}
-    self.ee: ESet = {}
-    self.ww: WMtx = []
+    self.ww: WMtx = []  # edge weight matrix
+    self.dd: [WMtx] = []  # shortest paths weights
+    self.pp: [WMtx] = []  # predecessor subgraphs
+
+  def pathASP(self, i: int, j: int) -> [int]:
+    if not dd or not pp: raise Exception("shortest paths not yet computed")
+    if self.pp[i][j] == -Infinity: return []
+    elif i == j: return [i]
+    else: return self.pathASP(i, pp[i][j])
 
   def makeV(self, vt: [Tag]) -> None:
     for vtag in vt: self.vv[vtag] = Vert(vtag)
     n = len(vt)
     r = range(0, n)
     # see Equation 23.1 p.647
-    self.ww = [[Infinity] * n for i in r]
+    self.ww = [[Infinity] * n for _ in r]
     for i in r: self.ww[i][i] = 0
-
-  def getV(self, vtag: Tag) -> β: return self.vv[vtag]
-  def getVV(self) -> [β]: return list(self.vv.values())
-  def numVV(self) -> int: return len(self.getVV())
-  def adj(self, u: β) -> [β]: return [self.getV(e.v.tag) for e in self.getEE() if e.u.tag == u.tag]
-
-  def getE(self, etag: Tag) -> ϵ: return self.ee[etag]
-  def getEE(self) -> [ϵ]: return list(self.ee.values())
-  def numEE(self) -> int: return len(self.getEE())
 
 class LstGraph(LstVE): pass
 

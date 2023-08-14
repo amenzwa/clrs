@@ -30,15 +30,28 @@ class ASPGraph(MtxGraph):
 
 ## §23.2 The Floyd-Warshall algorithm p.655
 
-def aspFloydWarshall(g: ASPGraph) -> [WMtx]:
+def aspFloydWarshall(g: ASPGraph) -> [WMtx, WMtx]:
   n = g.numVV()
   r = range(0, n)
-  dd: [WMtx] = [Infinity] * (n + 1)
-  dd[0] = g.ww
-  for k in range(1, n + 1):
-    dd[k] = [Infinity] * n
+  np1 = n + 1
+  # initialize
+  g.dd = [[]] * np1
+  g.dd[0] = g.ww
+  g.pp = [[]] * np1
+  g.pp[0] = [[]] * n
+  for i in r:
+    g.pp[0][i] = [-Infinity] * n  # use -Infinity instead of NIL as used in CLRS; see p.659
+    for j in r:
+      g.pp[0][i][j] = -Infinity if i == j or g.ww[i][j] == Infinity else i
+  # discover ASP in graph g
+  for k in range(1, np1):
+    g.dd[k] = [[]] * n
+    g.pp[k] = [[]] * n
     for i in r:
-      dd[k][i] = [Infinity] * n
+      g.dd[k][i] = [Infinity] * n
+      g.pp[k][i] = [-Infinity] * n
       for j in r:
-        dd[k][i][j] = min(dd[k - 1][i][j], dd[k - 1][i][k - 1] + dd[k - 1][k - 1][j])
-  return dd[n]
+        km1 = k - 1
+        g.dd[k][i][j] = min(g.dd[km1][i][j], g.dd[km1][i][km1] + g.dd[km1][km1][j])
+        g.pp[k][i][j] = g.pp[km1][km1][j] if g.dd[km1][i][j] > g.dd[km1][i][km1] + g.dd[km1][km1][j] else g.pp[km1][i][j]  # see Equation 23.8 p.659
+  return g.dd[n], g.pp[n]

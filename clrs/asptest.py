@@ -39,6 +39,8 @@ class FloydWarshallASPTestCase(TestCase):
   def testFloydWarshall(self) -> None:
     print(self.g)
     draw(self.g, directed=True, label=f"{self.g.tag} directed, weighted graph").render(f"viz-{self.g.tag}")
-    dd = aspFloydWarshall(self.g)
-    print(f"{self.g.tag}")
-    for i in range(0, len(dd)): print(f"  {dd[i]}")
+    dd, pp = aspFloydWarshall(self.g)
+    print(f"{self.g.tag}\n  all-pairs shortest paths")
+    for i in range(0, len(dd)): print(f"    {dd[i]}")
+    print("  predecessor subgraph")
+    for i in range(0, len(pp)): print(f"    {list(map(lambda x: x + 1, pp[i]))}")  # +1 to offset zero-based indices
