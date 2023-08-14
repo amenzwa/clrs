@@ -10,7 +10,7 @@ from unittest import TestCase
 from clrs.graph import draw
 from clrs.mst import MSTGraph, PrimMSTGraph, mstKruskal, mstPrim
 
-## Kruskal's and Prim's MST algorithms
+## Kruskal's and Prim's MST
 
 class MSTTestCase(TestCase):
   # Figure 21.4 p.592 and Figure 21.5 p.595

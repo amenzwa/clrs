@@ -11,7 +11,7 @@ from clrs.graph import draw
 from clrs.ssp import DijkstraSSPGraph, SSPGraph, sspBellmanFord, sspBellmanFordDAWG, sspDijkstra
 from clrs.util import isSome
 
-## Bellman-Ford SSP algorithm
+## Bellman-Ford SSP
 
 class BellmanFordSSPTestCase(TestCase):
   # Figure 22.4 p.613

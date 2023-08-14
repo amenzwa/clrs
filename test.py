@@ -11,7 +11,7 @@ Copyright sOnit, Inc. 2023
 from clrs.egatest import BFSTestCase, DFSTestCase, SCCTestCase, TSortTestCase
 from clrs.msttest import MSTTestCase
 from clrs.ssptest import BellmanFordDAWGTestCase, BellmanFordSSPTestCase, DijkstraSSPTestCase
-from clrs.asptest import FloydWarshallASPTestCase
+from clrs.asptest import FloydWarshallASPTestCase, TransitiveClosureTestCase
 from unittest import main
 
 if __name__ == '__main__': main()

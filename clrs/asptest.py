@@ -8,9 +8,9 @@ Copyright sOnit, Inc. 2023
 from unittest import TestCase
 
 from clrs.graph import draw
-from clrs.asp import ASPGraph, WMtx, aspFloydWarshall
+from clrs.asp import ASPGraph, BMtx, WMtx, aspFloydWarshall, tclosure
 
-## Floyd-Warshall ASP algorithm
+## Floyd-Warshall ASP
 
 class FloydWarshallASPTestCase(TestCase):
   # Figure 23.1 p.652
@@ -44,3 +44,32 @@ class FloydWarshallASPTestCase(TestCase):
     for i in range(0, len(dd)): print(f"    {dd[i]}")
     print("  predecessor subgraph")
     for i in range(0, len(pp)): print(f"    {list(map(lambda x: x + 1, pp[i]))}")  # +1 to offset zero-based indices
+
+## transitive closure
+
+class TransitiveClosureTestCase(TestCase):
+  # Figure 23.5 p.660
+  vt = ["1", "2", "3", "4"]
+  et = [  # directed edges
+    "2-3", "2-4",
+    "3-2",
+    "4-1", "4-3", ]
+  ew = {  # dummy edge weights
+    "2-3": 1, "2-4": 1,
+    "3-2": 1,
+    "4-1": 1, "4-3": 1, }
+  g = ASPGraph("dummy")
+
+  def setUp(self) -> None:
+    self.g = ASPGraph("Transitive Closure")
+    self.g.makeVEw(self.vt, self.et, self.ew)
+
+  def tearDown(self) -> None:
+    pass
+
+  def testTransitiveClosure(self) -> None:
+    print(self.g)
+    draw(self.g, directed=True, label=f"{self.g.tag} directed, weighted graph").render(f"viz-{self.g.tag}")
+    tt = tclosure(self.g)
+    print(f"{self.g.tag}\n  transitive closure")
+    for i in range(0, len(tt)): print(f"    {tt[i]}")

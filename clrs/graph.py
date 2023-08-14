@@ -67,6 +67,8 @@ def indicesOfETag(etag: Tag) -> [int, int]:
   [utag, vtag] = parseETag(etag)
   return [int(utag) - 1, int(vtag) - 1]  # vtag starts at 1
 
+def etagOfIndices(i: int, j: int): return f"{i + 1}-{j + 1}"
+
 ## graph and tree
 
 β = TypeVar("β")
