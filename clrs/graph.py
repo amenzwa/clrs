@@ -32,7 +32,7 @@ class Vert(Tagged):
   def __str__(self) -> str: return f"{self.tag} {self.showParent()} {self.showTimes()}"
   def show(self) -> str: return f"{self.tag}{f' {self.showTimes()}' if self.dis != Infinity else ''}"
   def showParent(self) -> str: return "^" + self.par.tag if not self.isRoot() else "None"
-  def showTimes(self) -> str: return f"{self.dis if self.dis != Infinity else '∞'}{f'/{self.fin}' if self.fin != -Infinity else '/∞'}"
+  def showTimes(self) -> str: return f"{self.dis if self.dis != Infinity else ''}{f'/{self.fin}' if self.fin != -Infinity else ''}"
 
   def isRoot(self) -> bool: return isNone(self.par)
 
