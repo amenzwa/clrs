@@ -11,7 +11,7 @@ from queue import PriorityQueue
 
 from clrs.graph import LstTree, Vert, makeETag
 from clrs.ega import tsort
-from clrs.mst import MSTGraph, PrimMSTGraph, PriVert, WgtEdge
+from clrs.mst import MSTGraph, PrimGraph, PriVert, WgtEdge
 
 from clrs.util import Infinity, Option
 
@@ -30,7 +30,7 @@ def relax(e: WgtEdge) -> bool:
   # return True if v.dis is decreased, False otherwise; see pp.610,620
   u = e.u
   v = e.v
-  d = u.dis + e.wgt
+  d = u.dis + round(e.wgt)
   if v.dis > d:
     v.par = u
     v.dis = d
@@ -38,8 +38,8 @@ def relax(e: WgtEdge) -> bool:
   return False
 
 def shortestPathWeight(g: SSPGraph, s: Vert, v: Vert) -> float:
-  # see p.604
-  return [g.getE(makeETag(u.par, u)).wgt for u in path(s, v)]
+  # δ(u, v); see p.604
+  return reduce(lambda acc, w: acc + w, [g.getE(makeETag(u.par, u)).wgt for u in g.pathS(s, v)], 0.0)
 
 ## §22.1 Bellman-Ford algorithm p.612
 
@@ -83,22 +83,23 @@ def sspBellmanFordDAWG(g: SSPGraph, s: Vert) -> Option[LstTree]:
 
 ## §22.3 Dijkstra's algorithm p.620
 
-DijkstraSSPGraph = PrimMSTGraph  # uses PriVertex
+DijkstraGraph = PrimGraph  # uses PriVertex and WgtEdge
 
 def sspDijkstra(g: SSPGraph, s: PriVert) -> LstTree:
-  assert(reduce(lambda acc, e: acc and e.wgt >= 0, g.getEE(), True))
+  assert(reduce(lambda acc, e: acc and e.wgt >= 0.0, g.getEE(), True))
   # initialize
   sspInit(g, s)
-  s.pri = s.dis
   b: VSet = {}  # vertex set of SSP
   q = PriorityQueue()
-  for u in g.getVV(): q.put(u)
+  for u in g.getVV():
+    u.pri = 0.0 if u == s else Infinity
+    q.put(u)
   # discover SSP in graph g
   while not q.empty():
     u = q.get()
     b[u.tag] = u
     for v in g.adj(u):
       if relax(g.getE(makeETag(u, v))):
-        v.pri = v.dis
+        v.pri = float(v.dis)
         q.queue.sort()  # rearrange q to account for decreased v.dis
   return getSSP(g, s)

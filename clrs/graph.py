@@ -32,7 +32,7 @@ class Vert(Tagged):
   def __str__(self) -> str: return f"{self.tag} {self.showParent()} {self.showTimes()}"
   def show(self) -> str: return f"{self.tag}{f' {self.showTimes()}' if self.dis != Infinity else ''}"
   def showParent(self) -> str: return "^" + self.par.tag if not self.isRoot() else "None"
-  def showTimes(self) -> str: return f"{self.dis if self.dis != Infinity else ''}{f'/{self.fin}' if self.fin != -Infinity else ''}"
+  def showTimes(self) -> str: return f"{self.dis if self.dis != Infinity else '∞'}{f'/{self.fin}' if self.fin != -Infinity else '/∞'}"
 
   def isRoot(self) -> bool: return isNone(self.par)
 
@@ -77,7 +77,7 @@ VSet = {Tag, β}  # vertex set
 ϵ = TypeVar("ϵ")
 ESet = {Tag, ϵ}  # edge set
 
-class VE(Tagged, Generic[β, ϵ]):  # base for graph and tree types
+class VE(Tagged, Generic[β, ϵ]):  # abstract base for graph and tree types
   def __init__(self, tag: Tag):
     super().__init__(tag)
 
@@ -129,7 +129,7 @@ class LstVE(VE):  # adjacency list representation of graphs and trees
       self.ee[e.tag] = e
 
   def pathS(self, s: β, v: β) -> [β]:
-    # see p.562
+    # path from source vertex s to vertex v; see p.562
     if v.isRoot(): return []
     return [s] if v == s else [v, *self.pathS(s, v.par)]
   def isAncestor(self, u: β, v: β) -> bool:
@@ -164,8 +164,6 @@ class MtxVE(LstVE):  # adjacency matrix representation of graphs and trees
   def __init__(self, tag: Tag):
     super().__init__(tag)
     self.ww: WMtx = []  # edge weight matrix
-    self.dd: [WMtx] = []  # shortest paths weights
-    self.pp: [WMtx] = []  # predecessor subgraphs
 
   def pathASP(self, i: int, j: int) -> [int]:
     if not dd or not pp: raise Exception("shortest paths not yet computed")

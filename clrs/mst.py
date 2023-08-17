@@ -24,7 +24,7 @@ class WgtEdge(Edge):
 
 ## MST connected, undirected graph with weighted edges
 
-class MSTGraph(LstGraph):
+class MSTGraph(LstGraph):  # uses WgtEdge
   def __init__(self, tag: Tag):
     super().__init__(tag)
 
@@ -63,6 +63,7 @@ class PriVert(Vert):
   def __init__(self, tag: Tag):
     super().__init__(tag)
     self.pri: float = Infinity
+  def init(self) -> None: self.__init__(self.tag)
 
   def __str__(self) -> str: return f"{super().__str__()} {self.priority()}"
   def priority(self) -> str: return f"{self.pri if self.pri != Infinity else ''}"
@@ -71,7 +72,7 @@ class PriVert(Vert):
 
 ## Prim MST graph with prioritized vertices
 
-class PrimMSTGraph(MSTGraph):
+class PrimGraph(MSTGraph):  # uses PriVert and WgtEdge
   def __init__(self, tag: Tag):
     super().__init__(tag)
 
@@ -85,7 +86,7 @@ def mstPrim(g: MSTGraph, r: PriVert) -> LstTree:
   for u in g.getVV():
     u.par = None
     u.pri = Infinity
-  r.pri = 0
+  r.pri = 0.0
   q = PriorityQueue()
   for u in g.getVV(): q.put(u)
   # discover MST in graph g

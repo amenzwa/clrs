@@ -8,7 +8,7 @@ Copyright sOnit, Inc. 2023
 from unittest import TestCase
 
 from clrs.graph import draw
-from clrs.mst import MSTGraph, PrimMSTGraph, mstKruskal, mstPrim
+from clrs.mst import MSTGraph, PrimGraph, mstKruskal, mstPrim
 
 ## Kruskal's and Prim's MST
 
@@ -42,17 +42,17 @@ class MSTTestCase(TestCase):
   def tearDown(self) -> None: pass
 
   def testKruskal(self) -> None:
-    self.g = MSTGraph("MST")
+    self.g = MSTGraph("Kruskal")
     self.g.makeVEw(self.vt, self.et, self.ew)
     print(self.g)
     draw(self.g, directed=False, label=f"{self.g.tag} connected, undirected graph").render(f"viz-{self.g.tag}")
     t = mstKruskal(self.g)
     print(t)
-    draw(t, directed=False, label=f"{t.tag} Kruskal Minimum Spanning Tree").render(f"viz-{t.tag}Kruskal")
+    draw(t, directed=False, label=f"{t.tag} Minimum Spanning Tree").render(f"viz-{t.tag}Kruskal")
 
   def testPrim(self) -> None:
-    self.g = PrimMSTGraph("MST")
+    self.g = PrimGraph("Prim")
     self.g.makeVEw(self.vt, self.et, self.ew)
     t = mstPrim(self.g, self.g.getV("a"))
     print(t)
-    draw(t, directed=False, label=f"{t.tag} Prim Minimum Spanning Tree").render(f"viz-{t.tag}Prim")
+    draw(t, directed=False, label=f"{t.tag} Minimum Spanning Tree").render(f"viz-{t.tag}Prim")

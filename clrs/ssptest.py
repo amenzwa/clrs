@@ -8,7 +8,7 @@ Copyright sOnit, Inc. 2023
 from unittest import TestCase
 
 from clrs.graph import draw
-from clrs.ssp import DijkstraSSPGraph, SSPGraph, sspBellmanFord, sspBellmanFordDAWG, sspDijkstra
+from clrs.ssp import DijkstraGraph, SSPGraph, sspBellmanFord, sspBellmanFordDAWG, sspDijkstra
 from clrs.util import isSome
 
 ## Bellman-Ford SSP
@@ -97,7 +97,7 @@ class DijkstraSSPTestCase(TestCase):
   g = SSPGraph("dummy")
 
   def setUp(self) -> None:
-    self.g = DijkstraSSPGraph("Dijkstra")
+    self.g = DijkstraGraph("Dijkstra")
     self.g.makeVEw(self.vt, self.et, self.ew)
 
   def tearDown(self) -> None:

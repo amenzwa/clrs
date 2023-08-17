@@ -38,7 +38,7 @@ The `graph.ipynb` Jupyter notebook is where to start reading about graph algorit
 - `clrs/util.py`—utility types and functions
   - `clrs/graph.py`—graph representation from Chapter 20
     - `clrs/ega.py`—BFS and DFS algorithms from Chapter 20
-      - `clrs/egatest.py`—tests of BFS and DFS algorithms with visualisations (`viz-*` output files)
+      - `clrs/egatest.py`—tests of BFS and DFS algorithms with visualisations
     - `clrs/mst.py`—Kruskal's and Prim's MST algorithms from Chapter 21
       - `clrs/msttest.py`—tests of MST algorithms with visualisations
       - `clrs/ssp.py`—Bellman-Ford and Dijkstra's SSP algorithms from Chapter 22
@@ -46,7 +46,7 @@ The `graph.ipynb` Jupyter notebook is where to start reading about graph algorit
       - `clrs/asp.py`—Floyd-Warshall, transitive closure, and Johnson's ASP algorithms from Chapter 23
         - `clrs/asptest.py`—tests of ASP algorithms with visualisations
 
-The `test.py` in the project top-level directory contains the Python tests for the entire project. See below for the instructions on how to run theses tests from a terminal.
+The `test.py` in the project top-level directory contains the Python tests for the entire project. This test script generates several `viz-*` visualisation files. See below for the instructions on how to run theses tests from a terminal.
 
 
 
