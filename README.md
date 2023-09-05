@@ -30,8 +30,8 @@ Below, I listed the IPython notebooks and the pure Python source files as a depe
         - [`ssptest.ipynb`](./ssptest.ipynb)—tests of SSP algorithms with visualisations
       - [`asp.ipynb`](./asp.ipynb)—Floyd-Warshall, transitive closure, and Johnson's ASP algorithms from Chapter 23
         - [`asptest.ipynb`](./asptest.ipynb)—tests of ASP algorithms with visualisations
-    - [`flow.ipynb`](./flow.ipynb)—Edmonds-Karp maximum flow and maximum bipartite matching algorithms from Chapter 24
-      - [`flowtest.ipynb`](./flowtest.ipynb)—tests of maximum flow algorithms with visualisations
+    - [`flow.ipynb`](./flow.ipynb)—Edmonds-Karp maximum flow algorithm from Chapter 24
+      - [`flowtest.ipynb`](./flowtest.ipynb)—tests of maximum flow algorithm with visualisations
 
 The `graph.ipynb` Jupyter notebook is where to start reading about graph algorithms.
 
@@ -47,8 +47,8 @@ The `graph.ipynb` Jupyter notebook is where to start reading about graph algorit
         - `clrs/ssptest.py`—tests of SSP algorithms with visualisations
       - `clrs/asp.py`—Floyd-Warshall, transitive closure, and Johnson's ASP algorithms from Chapter 23
         - `clrs/asptest.py`—tests of ASP algorithms with visualisations
-    - `clrs/flow.py`—Edmonds-Karp maximum flow and maximum bipartite matching algorithms from Chapter 24
-      - `clrs/flowtest.py`—tests of maximum flow algorithms with visualisations
+    - `clrs/flow.py`—Edmonds-Karp maximum flow algorithm from Chapter 24
+      - `clrs/flowtest.py`—tests of maximum flow algorithm with visualisations
 
 The `test.py` in the project top-level directory contains the Python tests for the entire project. This test script generates several `viz-*` visualisation files. See below for the instructions on how to run theses tests from a terminal.
 
