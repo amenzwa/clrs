@@ -12,6 +12,7 @@ from clrs.egatest import BFSTestCase, DFSTestCase, SCCTestCase, TSortTestCase
 from clrs.msttest import MSTTestCase
 from clrs.ssptest import BellmanFordDAWGTestCase, BellmanFordSSPTestCase, DijkstraSSPTestCase
 from clrs.asptest import FloydWarshallASPTestCase, JohnsonTestCase, TransitiveClosureTestCase
+from clrs.flowtest import EdmondsKarpMFTestCase
 from unittest import main
 
 if __name__ == '__main__': main()

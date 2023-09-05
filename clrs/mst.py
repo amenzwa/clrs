@@ -34,7 +34,7 @@ class MSTGraph(LstGraph):  # uses WgtEdge
   def makeEw(self, et: [Tag], ew: {Tag, float}) -> None:
     for etag in et:
       [utag, vtag] = parseETag(etag)
-      e = WgtEdge(self.getV(utag), self.getV(vtag), ew[etag])
+      e = WgtEdge(self.getV(utag), self.getV(vtag), float(ew[etag]))
       self.ee[e.tag] = e
 
 ## Kruskal's MST algorithm p.592

@@ -39,7 +39,7 @@ def relax(e: WgtEdge) -> bool:
 
 def shortestPathWeight(g: SSPGraph, s: Vert, v: Vert) -> float:
   # δ(u, v); see p.604
-  return reduce(lambda acc, w: acc + w, [g.getE(makeETag(u.par, u)).wgt for u in g.pathS(s, v)], 0.0)
+  return reduce(lambda acc, w: acc + w, [g.getE(makeETag(u.par, u)).wgt for u in g.pathSV(s, v)], 0.0)
 
 ## §22.1 Bellman-Ford algorithm p.612
 

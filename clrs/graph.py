@@ -11,7 +11,7 @@ from typing import Generic, TypeVar
 
 import graphviz as V
 
-from clrs.util import Infinity, Option, Tag, Tagged, isNone
+from clrs.util import Infinity, Option, Tag, Tagged, isNone, todo
 
 ## vertex
 
@@ -31,7 +31,7 @@ class Vert(Tagged):
 
   def __str__(self) -> str: return f"{self.tag} {self.showParent()} {self.showTimes()}"
   def show(self) -> str: return f"{self.tag}{f' {self.showTimes()}' if self.dis != Infinity else ''}"
-  def showParent(self) -> str: return "^" + self.par.tag if not self.isRoot() else "None"
+  def showParent(self) -> str: return "^" + self.par.tag if not self.isRoot() else "Root"
   def showTimes(self) -> str: return f"{self.dis if self.dis != Infinity else ''}{f'/{self.fin}' if self.fin != -Infinity else ''}"
 
   def isRoot(self) -> bool: return isNone(self.par)
@@ -84,8 +84,8 @@ class VE(Tagged, Generic[β, ϵ]):  # abstract base for graph and tree types
   def makeVE(self, vt: [Tag], et: [Tag]) -> None:
     self.makeV(vt)
     self.makeE(et)
-  def makeV(self, vt: [Tag]) -> None: raise Exception("todo")
-  def makeE(self, et: [Tag]) -> None: raise Exception("todo")
+  def makeV(self, vt: [Tag]) -> None: todo()
+  def makeE(self, et: [Tag]) -> None: todo()
 
   def __str__(self) -> str: return self.tag + "\n" + self.showVertices() + "\n" + self.showEdges()
   def showVertices(self) -> str:
@@ -95,24 +95,24 @@ class VE(Tagged, Generic[β, ϵ]):  # abstract base for graph and tree types
 
   # vertex
 
-  def insV(self, v: β) -> None: raise Exception("todo")
-  def delV(self, v: β) -> None: raise Exception("todo")
-  def dupVV(self, vv: VSet) -> None: raise Exception("todo")
-  def getV(self, vtag: Tag) -> β: raise Exception("todo")
-  def getVV(self) -> [β]: raise Exception("todo")
-  def numVV(self) -> int: raise Exception("todo")
-  def adj(self, u: β) -> [β]: raise Exception("todo")
-  def hasV(self, vtag: Tag) -> bool: raise Exception("todo")
+  def insV(self, v: β) -> None: todo()
+  def delV(self, v: β) -> None: todo()
+  def dupVV(self, vv: VSet) -> None: todo()
+  def getV(self, vtag: Tag) -> β: todo()
+  def getVV(self) -> [β]: todo()
+  def numVV(self) -> int: todo()
+  def adj(self, u: β) -> [β]: todo()
+  def hasV(self, vtag: Tag) -> bool: todo()
 
   # edge
 
-  def insE(self, e: ϵ) -> None: raise Exception("todo")
-  def delE(self, e: ϵ) -> None: raise Exception("todo")
-  def dupEE(self, ee: ESet) -> None: raise Exception("todo")
-  def getE(self, etag: Tag) -> ϵ: raise Exception("todo")
-  def getEE(self) -> [ϵ]: raise Exception("todo")
-  def numEE(self) -> int: raise Exception("todo")
-  def hasE(self, etag: Tag) -> bool: raise Exception("todo")
+  def insE(self, e: ϵ) -> None: todo()
+  def delE(self, e: ϵ) -> None: todo()
+  def dupEE(self, ee: ESet) -> None: todo()
+  def getE(self, etag: Tag) -> ϵ: todo()
+  def getEE(self) -> [ϵ]: todo()
+  def numEE(self) -> int: todo()
+  def hasE(self, etag: Tag) -> bool: todo()
 
 class LstVE(VE):  # adjacency list representation of graphs and trees
   def __init__(self, tag: Tag):
@@ -128,10 +128,9 @@ class LstVE(VE):  # adjacency list representation of graphs and trees
       e = Edge(self.getV(utag), self.getV(vtag))
       self.ee[e.tag] = e
 
-  def pathS(self, s: β, v: β) -> [β]:
+  def pathSV(self, s: β, v: β) -> [β]:
     # path from source vertex s to vertex v; see p.562
-    if v.isRoot(): return []
-    return [s] if v == s else [v, *self.pathS(s, v.par)]
+    return [s] if v.isRoot() or v == s else [v, *self.pathSV(s, v.par)]
   def isAncestor(self, u: β, v: β) -> bool:
     # check if vertex u is the ancestor of vertex v (there exists a path from u ~> v)
     def reachable(a: β) -> bool:

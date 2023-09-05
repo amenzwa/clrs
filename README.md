@@ -2,7 +2,7 @@
 
 ## *Jupyter notebooks for CLRS algorithms*
 
-This project provides implementations of, and commentaries on, some of the interesting algorithms described in the well known textbook [*Introduction to Algorithms*](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) by Professors Cormen, Leiserson, Rivest, and Stein (CLRS 4ed 2022; formerly CLR 1ed 1990). The Python implementations and the associated commentaries are presented as [Jupyter](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) notebook interactive documents.
+This project provides implementations of, and commentaries on, some of the interesting algorithms—mostly graph-related—described in the well known textbook [*Introduction to Algorithms*](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) by Professors Cormen, Leiserson, Rivest, and Stein (CLRS 4ed 2022; formerly CLR 1ed 1990). The Python implementations and the associated commentaries are presented as [Jupyter](https://www.amazon.com/Introduction-Algorithms-fourth-Thomas-Cormen/dp/026204630X) notebook interactive documents.
 
 The main purpose here is to show how to convert the English descriptions of algorithms given in CLRS into *code* and how to use the theorems, lemmas, corollaries, and other mathematical properties proven therein to implement *test* cases for the code. That is, the aim is not to provide a comprehensive implementations of CLRS algorithms, but to focus on the process of closely reading a mathematical textbook like this, following its arguments and proofs, converting algorithm text into code, and testing the implementations against proven mathematical properties.
 
@@ -30,6 +30,8 @@ Below, I listed the IPython notebooks and the pure Python source files as a depe
         - [`ssptest.ipynb`](./ssptest.ipynb)—tests of SSP algorithms with visualisations
       - [`asp.ipynb`](./asp.ipynb)—Floyd-Warshall, transitive closure, and Johnson's ASP algorithms from Chapter 23
         - [`asptest.ipynb`](./asptest.ipynb)—tests of ASP algorithms with visualisations
+    - [`flow.ipynb`](./flow.ipynb)—Edmonds-Karp maximum flow and maximum bipartite matching algorithms from Chapter 24
+      - [`flowtest.ipynb`](./flowtest.ipynb)—tests of maximum flow algorithms with visualisations
 
 The `graph.ipynb` Jupyter notebook is where to start reading about graph algorithms.
 
@@ -45,6 +47,8 @@ The `graph.ipynb` Jupyter notebook is where to start reading about graph algorit
         - `clrs/ssptest.py`—tests of SSP algorithms with visualisations
       - `clrs/asp.py`—Floyd-Warshall, transitive closure, and Johnson's ASP algorithms from Chapter 23
         - `clrs/asptest.py`—tests of ASP algorithms with visualisations
+    - `clrs/flow.py`—Edmonds-Karp maximum flow and maximum bipartite matching algorithms from Chapter 24
+      - `clrs/flowtest.py`—tests of maximum flow algorithms with visualisations
 
 The `test.py` in the project top-level directory contains the Python tests for the entire project. This test script generates several `viz-*` visualisation files. See below for the instructions on how to run theses tests from a terminal.
 

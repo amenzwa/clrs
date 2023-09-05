@@ -12,6 +12,8 @@ Infinity = sys.maxsize
 
 α = TypeVar("α")
 
+def todo() -> None: raise Exception("to do")
+
 ### Tag
 
 Tag = str  # label
