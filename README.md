@@ -79,7 +79,7 @@ Then, we install the required Python packages into JLD's virtual environment in 
 ```bash
 $ brew install graphviz # required by Python graphviz graph visualisation library
 $ cd ~/Library/jupyterlab-desktop
-$ source ./jlab_server/activate # start a new shell with JLD's Python version
+$ source jlab_server/bin/activate # start a new shell with JLD's Python version
 (jlab_server) $ pip3 install -r ~/Documents/clrs/requirements.txt
 ```
 
@@ -126,12 +126,14 @@ Study in this manner the CLRS chapters cited here, before you plough through the
 
 It is obvious that CLRS presents at a conceptual level. A direct implementation of these algorithms, as it is done here, will not yield a highly-efficient, commercial-grade software. The main point of CLRS, and this project too, is to learn algorithms design, analysis, implementation, and testing.
 
-Jupyter, Mathematica, and similar literate programming environments are excellent for small, mathematical or technical projects that needs to combine textual description with sample code or data visualisation. Class projects, technical publications, internal-use scripts, and similar small projects are all candidates for Jupyter-based literate programming endeavour. Like all "documents", it is the author's responsibility to keep the entire document, not just the text or the code, up-to-date.
+Jupyter, Mathematica, and similar literate programming environments are excellent for small, mathematical or technical projects that needs to combine textual description with sample code or data visualisation. Class projects, technical publications, internal-use automation scripts, and similar small projects are all candidates for Jupyter-based literate programming endeavour. Like all "documents", it is the author's responsibility to keep the entire document, not just the text or the code, up-to-date.
 
 However, if the project is large, like a typical enterprise application, using Jupyter will lead only to surprise and sadness. This is because Jupyter, while an excellent platform for its intended purpose—composing interactive, technical documents on a small scale—is not at all appropriate for developing substantive applications with intricate dependencies.
 
-For example, even in the initial phase, this project is already fairly large, consisting of several reusable modules. The scope and size of this project will inevitably grow with time. Writing such substantial software in Jupyter is painful at best and, often, it is maddening. Refactoring in Jupyter can be a humbling experience. The solution is to develop the software in a proper IDE, like Emacs, VSCode, or IntelliJ IDEA, and then transfer the code snippets to Jupyter notebooks to be combined with the textual commentaries, while keeping a tight control over the use of global variables. In any case, it behooves you to look at the pure Python implementations, after you have studied the Jupyter notebooks.
+For example, even in the initial phase, this project is already fairly large, consisting of several reusable modules. The scope and size of this project will inevitably grow with time. Developing a large piece of software in Jupyter is painful at best and, often, it is maddening. Refactoring in Jupyter can be a humbling experience. The solution is to develop the software in a proper IDE, like Emacs, VSCode, or IntelliJ IDEA, and then reuse the modules and classes from within IPython code in Jupyter. This approach works well, when the goal is not to show the code to the user but to allow him to run it to obtain the results.
 
-Another kink is that I opted to use the latest Python version for the pure Python implementations, so that I demonstrate the use the newest language facilities and syntactic improvements. That means I have to downgrade the syntax, when I convert the Python code into IPython code.
+But since one of the main goals of this project is to explain the algorithm implementations as well as to allow the reader to run the code as he reads, I chose to copy the code from the IDE and insert it into Jupyter, then combine the code with the commentaries. In a project of this size, it is vital to maintain a tight control over the use of global variables across all Jupyter notebooks. While this somewhat of a wasted effort on my part, I feel this provides a more immersive reading experience for you. In any case, it behooves you to look at the pure Python implementations, after you have studied the Jupyter notebooks.
+
+Another kink is that I opted to use the latest Python version for the pure Python implementations, so that I may demonstrate the use the newest language facilities and syntactic enhancements. That means I had to downgrade the syntax, when I convert the Python code into IPython code.
 
 All this, obviously, is quite vexing for me, but I hope the effects justify the efforts.
